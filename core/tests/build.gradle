@@ -1,0 +1,12 @@
+apply plugin: 'java-library'
+apply plugin: 'kotlin'
+
+dependencies {
+    implementation deps.kotlin.stdlib
+    implementation deps.kotlin.coroutines
+    implementation testDeps.junit
+    api testDeps.kotlin.coroutines
+}
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'

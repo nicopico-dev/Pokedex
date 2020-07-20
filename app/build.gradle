@@ -1,0 +1,35 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion build.compileSdk
+    buildToolsVersion build.buildTools
+
+    defaultConfig {
+        applicationId 'fr.nicopico.pokedex'
+        minSdkVersion build.minSdk
+        targetSdkVersion build.targetSdk
+        versionCode 1
+        versionName '1.0'
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation deps.kotlin.stdlib
+    implementation deps.android.coreKtx
+    implementation deps.android.appCompat
+
+    testImplementation testDeps.junit
+
+    androidTestImplementation testDeps.android.junit
+    androidTestImplementation testDeps.android.espresso
+}

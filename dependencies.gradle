@@ -1,0 +1,66 @@
+repositories {
+    google()
+    jcenter()
+    maven { url 'https://dl.bintray.com/sargunv/maven' }
+}
+
+ext {
+    moshi_version = '1.9.3'
+    okhttp_version = '4.8.0'
+    retrofit_version = '2.9.0'
+    kotlinCoroutines_version = '1.3.8'
+
+    mods = [
+            core: [
+                    api: project(":core:api"),
+                    data: project(":core:data"),
+                    tests: project(":core:tests"),
+            ],
+    ]
+
+
+    build = [
+            compileSdk: 29,
+            buildTools: '29.0.3',
+            minSdk    : 23,
+            targetSdk : 29,
+    ]
+
+    deps = [
+            kotlin: [
+                    stdlib: "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
+                    coroutines: "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutines_version",
+            ],
+
+            android: [
+                    appCompat: 'androidx.appcompat:appcompat:1.1.0',
+                    coreKtx: 'androidx.core:core-ktx:1.3.0',
+                    coroutines: "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutines_version",
+            ],
+
+            network: [
+                    moshi: "com.squareup.moshi:moshi-kotlin:$moshi_version",
+                    okhttp3: "com.squareup.okhttp3:okhttp:$okhttp_version",
+                    retrofit2: "com.squareup.retrofit2:retrofit:$retrofit_version",
+                    retrofit2_moshi: "com.squareup.retrofit2:converter-moshi:$retrofit_version",
+            ],
+    ]
+
+    kapt = [
+            moshi: "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version",
+    ]
+
+    testDeps = [
+            android: [
+                    espresso: 'androidx.test.espresso:espresso-core:3.2.0',
+                    junit: 'androidx.test.ext:junit:1.1.1',
+            ],
+            kotlin: [
+                    coroutines: "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutines_version",
+            ],
+            mockk: 'io.mockk:mockk:1.9.3',
+            mockWebServer: "com.squareup.okhttp3:mockwebserver:$okhttp_version",
+            junit: 'junit:junit:4.13',
+            truth: 'com.google.truth:truth:1.0.1',
+    ]
+}

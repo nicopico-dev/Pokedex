@@ -1,0 +1,5 @@
+include ':core:tests'
+include ':core:api'
+include ':core:data'
+include ':app'
+rootProject.name = "Pokedex"
