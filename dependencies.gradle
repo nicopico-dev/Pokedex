@@ -13,7 +13,7 @@ ext {
     mods = [
             core: [
                     api: project(":core:api"),
-                    data: project(":core:data"),
+                    domain: project(":core:domain"),
                     tests: project(":core:tests"),
             ],
     ]
