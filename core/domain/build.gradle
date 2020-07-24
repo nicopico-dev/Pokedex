@@ -5,6 +5,11 @@ dependencies {
     implementation mods.core.api
 
     implementation deps.kotlin.stdlib
+
+    testImplementation testDeps.junit
+    testImplementation testDeps.truth
+
+    testImplementation mods.core.tests
 }
 
 sourceCompatibility = '1.8'
