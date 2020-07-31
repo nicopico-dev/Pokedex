@@ -8,6 +8,7 @@ dependencies {
 
     testImplementation testDeps.junit
     testImplementation testDeps.truth
+    testImplementation testDeps.mockk
 
     testImplementation mods.core.tests
 }
