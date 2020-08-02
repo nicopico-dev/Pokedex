@@ -1,4 +1,4 @@
-package fr.nicopico.base.domain.usecase
+package fr.nicopico.base.usecase
 
 sealed class Result<T> {
     class Success<T>(val value: T) : Result<T>()

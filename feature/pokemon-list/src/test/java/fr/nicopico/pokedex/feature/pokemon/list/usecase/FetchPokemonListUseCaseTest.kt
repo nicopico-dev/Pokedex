@@ -1,13 +1,13 @@
 package fr.nicopico.pokedex.feature.pokemon.list.usecase
 
 import com.google.common.truth.Truth.assertThat
+import fr.nicopico.base.tests.CoroutineTestRule
+import fr.nicopico.base.usecase.Result
 import fr.nicopico.pokedex.core.api.clients.PokemonApi
 import fr.nicopico.pokedex.core.api.models.PagedResource
 import fr.nicopico.pokedex.core.api.models.PokemonJson
-import fr.nicopico.pokedex.core.tests.CoroutineTestRule
 import fr.nicopico.pokedex.domain.model.Page
 import fr.nicopico.pokedex.domain.model.Pokemon
-import fr.nicopico.pokedex.domain.model.Result
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
@@ -43,8 +43,8 @@ class FetchPokemonListUseCaseTest {
                 next = null,
                 previous = null,
                 results = listOf(
-                        PokemonJson(id = 1, name = "Bulbizar"),
-                        PokemonJson(id = 2, name = "Pikachu")
+                        PokemonJson(name = "Bulbizar", url = "https://pokeapi.co/api/v2/pokemon/1/"),
+                        PokemonJson(name = "Pikachu", url = "https://pokeapi.co/api/v2/pokemon/2/")
                 )
         )
 
@@ -53,7 +53,20 @@ class FetchPokemonListUseCaseTest {
 
         // Then
         assertThat(actual).isInstanceOf(Result.Success::class.java)
+
         val success = actual as Result.Success<Page<Pokemon>>
         assertThat(success.value.content).hasSize(2)
+
+        val bulbizar = success.value.content[0]
+        with(bulbizar) {
+            assertThat(id).isEqualTo(1)
+            assertThat(name).isEqualTo("Bulbizar")
+        }
+
+        val pikachu = success.value.content[1]
+        with(pikachu) {
+            assertThat(id).isEqualTo(2)
+            assertThat(name).isEqualTo("Pikachu")
+        }
     }
 }

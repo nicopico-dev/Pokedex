@@ -1,4 +1,4 @@
-package fr.nicopico.base.domain.usecase
+package fr.nicopico.base.usecase
 
 interface UseCase<PARAMETER, RESULT> {
     suspend fun execute(parameter: PARAMETER): Result<RESULT>
