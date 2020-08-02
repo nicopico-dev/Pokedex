@@ -1,4 +1,4 @@
-package fr.nicopico.pokedex.core.tests
+package fr.nicopico.base.tests
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

@@ -12,10 +12,14 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/base" />
+            <option value="$PROJECT_DIR$/base/tests" />
+            <option value="$PROJECT_DIR$/base/usecase" />
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/core/api" />
             <option value="$PROJECT_DIR$/core/domain" />
-            <option value="$PROJECT_DIR$/core/tests" />
+            <option value="$PROJECT_DIR$/feature" />
+            <option value="$PROJECT_DIR$/feature/pokemon-list" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

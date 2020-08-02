@@ -16,7 +16,7 @@ dependencies {
     testImplementation testDeps.mockWebServer
     testImplementation testDeps.truth
 
-    testImplementation mods.core.tests
+    testImplementation mods.base.tests
 }
 
 sourceCompatibility = '1.8'

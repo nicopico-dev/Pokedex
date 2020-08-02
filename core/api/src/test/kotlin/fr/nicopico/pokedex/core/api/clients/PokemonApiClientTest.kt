@@ -1,7 +1,7 @@
 package fr.nicopico.pokedex.core.api.clients
 
 import com.google.common.truth.Truth.assertThat
-import fr.nicopico.pokedex.core.tests.CoroutineTestRule
+import fr.nicopico.base.tests.CoroutineTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
