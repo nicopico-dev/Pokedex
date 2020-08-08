@@ -23,6 +23,32 @@ plugins {
     id 'io.gitlab.arturbosch.detekt' version "$detekt_version" apply false
 }
 
+ext {
+    androidModules = [
+            'app',
+            'pokemon-list',
+    ]
+
+    kotlinModules = [
+            'api',
+            'domain',
+            'tests',
+            'usecase',
+    ]
+}
+
+boolean isAndroidModule(Project project) {
+    //boolean isAndroidLibrary = project.plugins.hasPlugin('com.android.library')
+    //boolean isAndroidApp = project.plugins.hasPlugin('com.android.application')
+    //return isAndroidLibrary || isAndroidApp
+    return androidModules.contains(project.name)
+}
+
+boolean isKotlinModule(Project project) {
+    //return project.plugins.hasPlugin('kotlin')
+    return kotlinModules.contains(project.name)
+}
+
 subprojects {
     apply from: "${rootProject.rootDir}/dependencies.gradle"
     apply from: "${rootProject.rootDir}/static_analysis.gradle"

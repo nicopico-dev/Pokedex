@@ -27,7 +27,7 @@ project.ext {
             '**/*Dagger.*'
     ]
 
-    jacocoConfigForAndroid = {
+    jacocoReportConfigAndroid = {
         def coverageSourceDirs = [
                 "$projectDir/src/main/java",
                 "$projectDir/src/main/kotlin"
@@ -48,56 +48,64 @@ project.ext {
     }
 }
 
-afterEvaluate { project ->
-    def ignoreList = jacocoIgnoreList
-    def projectName = project.name
-    if (ignoreList.contains(projectName)) {
-        println "Jacoco: ignoring project ${projectName}"
-        return false
+if (!jacocoIgnoreList.contains(project.name)) {
+    tasks.register('testExistenceValidation', TestExistenceValidation)
+
+    configureCoverageReport()
+    configureCoverageVerification()
+}
+
+private def configureCoverageReport() {
+    if (isAndroidModule(project)) {
+        task jacocoTestReport(
+                type: JacocoReport,
+                dependsOn: [ 'testExistenceValidation', 'testDebugUnitTest' ]
+        ) {
+            configure jacocoReportConfigAndroid
+        }
+    } else if (isKotlinModule(project)) {
+        jacocoTestReport {
+            dependsOn testExistenceValidation
+            dependsOn test
+        }
+    } else {
+        return
+    }
+
+    // Common configurations
+    jacocoTestReport {
+        reports {
+            csv.enabled false
+            xml.enabled false
+            html {
+                enabled true
+                destination file("${buildDir}/coverage-report")
+            }
+        }
+    }
+}
+
+private def configureCoverageVerification() {
+    if (isAndroidModule(project)) {
+        task jacocoTestCoverageVerification(
+                type: JacocoCoverageVerification,
+                dependsOn: [ 'testExistenceValidation', 'testDebugUnitTest' ]
+        )
+    } else if (isKotlinModule(project)) {
+        jacocoTestCoverageVerification {
+            dependsOn testExistenceValidation
+            dependsOn test
+        }
+    } else {
+        return
     }
 
     def threshold = project.hasProperty('jacocoCoverageThreshold')
             ? project.jacocoCoverageThreshold
             : project.jacocoCoverageThresholdDefault
 
-    if (isAndroidModule(project)) {
-        setupAndroidReporting()
-        setupAndroidCoverageVerification(threshold)
-    } else if (isKotlinModule(project)) {
-        setupKotlinReporting()
-        setupKotlinCoverageVerification(threshold)
-    }
-}
-
-private static boolean isAndroidModule(Project project) {
-    boolean isAndroidLibrary = project.plugins.hasPlugin('com.android.library')
-    boolean isAndroidApp = project.plugins.hasPlugin('com.android.application')
-    return isAndroidLibrary || isAndroidApp
-}
-
-private static boolean isKotlinModule(Project project) {
-    return project.plugins.hasPlugin('kotlin')
-}
-
-private def setupKotlinReporting() {
-    jacocoTestReport {
-        dependsOn testExistenceValidation
-        dependsOn test
-        reports {
-            csv.enabled false
-            xml.enabled false
-            html {
-                enabled true
-                destination file("${buildDir}/coverage-report")
-            }
-        }
-    }
-}
-
-private def setupKotlinCoverageVerification(threshold) {
+    // Common configuration
     jacocoTestCoverageVerification {
-        dependsOn testExistenceValidation
-        dependsOn test
         violationRules {
             rule {
                 limit {
@@ -105,46 +113,6 @@ private def setupKotlinCoverageVerification(threshold) {
                 }
             }
         }
-    }
-}
-
-private def setupAndroidReporting() {
-    tasks.withType(Test) {
-        // Whether or not classes without source location should be instrumented
-        jacoco.includeNoLocationClasses true
-    }
-
-    task jacocoTestReport(
-            type: JacocoReport,
-            dependsOn: [ 'testExistenceValidation', 'testDebugUnitTest' ]
-    ) {
-        reports {
-            csv.enabled false
-            xml.enabled false
-            html {
-                enabled true
-                destination file("${buildDir}/coverage-report")
-            }
-        }
-
-        configure jacocoConfigForAndroid
-    }
-}
-
-private def setupAndroidCoverageVerification(threshold) {
-    task jacocoTestCoverageVerification(
-            type: JacocoCoverageVerification,
-            dependsOn: [ 'testExistenceValidation', 'testDebugUnitTest' ]
-    ) {
-        violationRules {
-            rule {
-                limit {
-                    minimum = threshold
-                }
-            }
-        }
-
-        configure jacocoConfigForAndroid
     }
 }
 
@@ -173,4 +141,3 @@ class TestExistenceValidation extends DefaultTask {
         throw new GradleException("${project.name} has no unit tests.")
     }
 }
-tasks.register('testExistenceValidation', TestExistenceValidation)
