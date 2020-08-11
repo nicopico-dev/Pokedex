@@ -1,5 +1,6 @@
 package fr.nicopico.base.usecase
 
+/** Adaptation from [kotlin.Result], as the original generate a warning when used as a return type */
 sealed class Result<T> {
     class Success<T>(val value: T) : Result<T>()
     class Failure<T>(val error: Throwable) : Result<T>()
