@@ -4,8 +4,6 @@ plugins {
 }
 
 dependencies {
-    implementation mods.core.api
-
     implementation deps.kotlin.stdlib
 
     testImplementation testDeps.junit

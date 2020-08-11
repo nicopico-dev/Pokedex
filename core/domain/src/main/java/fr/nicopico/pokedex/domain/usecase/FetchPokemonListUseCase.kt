@@ -1,4 +1,4 @@
-package fr.nicopico.pokedex.feature.pokemon.list.usecase
+package fr.nicopico.pokedex.domain.usecase
 
 import fr.nicopico.base.usecase.Result
 import fr.nicopico.base.usecase.UseCase
@@ -7,7 +7,7 @@ import fr.nicopico.pokedex.domain.model.PageIndex
 import fr.nicopico.pokedex.domain.model.Pokemon
 import fr.nicopico.pokedex.domain.repository.PokemonRepository
 
-internal class FetchPokemonListUseCase(
+class FetchPokemonListUseCase(
     private val pokemonRepository: PokemonRepository,
     private val pageSize: Int = 20
 ) : UseCase<PageIndex, Result<Page<Pokemon>>> {

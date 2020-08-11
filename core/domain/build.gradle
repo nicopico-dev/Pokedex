@@ -4,15 +4,14 @@ plugins {
 }
 
 dependencies {
-    implementation mods.core.api
+    api mods.base.usecase
 
     implementation deps.kotlin.stdlib
 
+    testImplementation mods.base.tests
     testImplementation testDeps.junit
     testImplementation testDeps.truth
     testImplementation testDeps.mockk
-
-    testImplementation mods.base.tests
 }
 
 sourceCompatibility = '1.8'

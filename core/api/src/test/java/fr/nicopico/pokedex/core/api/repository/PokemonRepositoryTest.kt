@@ -1,16 +1,15 @@
-package fr.nicopico.pokedex.domain.repository
+package fr.nicopico.pokedex.core.api.repository
 
 import com.google.common.truth.Truth.assertThat
 import fr.nicopico.base.tests.CoroutineTestRule
 import fr.nicopico.pokedex.core.api.clients.PokemonApi
 import fr.nicopico.pokedex.core.api.models.PagedResource
 import fr.nicopico.pokedex.core.api.models.PokemonJson
-import fr.nicopico.pokedex.domain.model.getLimit
-import fr.nicopico.pokedex.domain.model.getOffset
+import fr.nicopico.pokedex.core.api.models.getLimit
+import fr.nicopico.pokedex.core.api.models.getOffset
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
-import io.mockk.mockk
 import io.mockk.slot
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
@@ -25,7 +24,7 @@ class PokemonRepositoryTest {
     @get:Rule
     val coroutineTestRule = CoroutineTestRule()
 
-    private lateinit var repository: PokemonRepository
+    private lateinit var repository: RemotePokemonRepository
 
     @MockK
     private lateinit var api: PokemonApi
@@ -33,7 +32,8 @@ class PokemonRepositoryTest {
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-        repository = PokemonRepository(api)
+        repository =
+            RemotePokemonRepository(api)
     }
 
     @Test

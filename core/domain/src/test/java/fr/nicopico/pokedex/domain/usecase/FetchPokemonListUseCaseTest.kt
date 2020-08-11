@@ -1,4 +1,4 @@
-package fr.nicopico.pokedex.feature.pokemon.list.usecase
+package fr.nicopico.pokedex.domain.usecase
 
 import com.google.common.truth.Truth.assertThat
 import fr.nicopico.base.tests.CoroutineTestRule
@@ -31,7 +31,10 @@ class FetchPokemonListUseCaseTest {
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-        useCase = FetchPokemonListUseCase(pokemonRepository, pageSize)
+        useCase = FetchPokemonListUseCase(
+            pokemonRepository,
+            pageSize
+        )
     }
 
     @Test

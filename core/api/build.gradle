@@ -5,6 +5,8 @@ plugins {
 }
 
 dependencies {
+    implementation mods.core.domain
+
     implementation deps.kotlin.stdlib
 
     implementation deps.network.retrofit2
@@ -14,11 +16,11 @@ dependencies {
 
     kapt kapt.moshi
 
-    testImplementation testDeps.junit
-    testImplementation testDeps.mockWebServer
-    testImplementation testDeps.truth
-
     testImplementation mods.base.tests
+    testImplementation testDeps.junit
+    testImplementation testDeps.truth
+    testImplementation testDeps.mockk
+    testImplementation testDeps.mockWebServer
 }
 
 sourceCompatibility = '1.8'

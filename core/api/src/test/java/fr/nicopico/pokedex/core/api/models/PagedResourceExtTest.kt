@@ -1,9 +1,9 @@
-package fr.nicopico.pokedex.domain.model
+package fr.nicopico.pokedex.core.api.models
 
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 
-class PageIndexTest {
+class PagedResourceExtTest {
 
     @Test
     fun `on the first page, offset should be 0`() {

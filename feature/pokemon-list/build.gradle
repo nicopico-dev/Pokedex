@@ -36,9 +36,7 @@ android {
 }
 
 dependencies {
-    implementation mods.base.usecase
     implementation mods.core.domain
-    implementation mods.core.api
 
     implementation deps.kotlin.stdlib
 
