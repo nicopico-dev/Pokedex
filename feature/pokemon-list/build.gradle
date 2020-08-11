@@ -47,6 +47,8 @@ dependencies {
     implementation deps.android.recyclerView
     implementation deps.android.recyclerViewSelection
 
+    implementation deps.media.coil
+
     testImplementation testDeps.junit
     testImplementation testDeps.truth
     testImplementation testDeps.mockk
