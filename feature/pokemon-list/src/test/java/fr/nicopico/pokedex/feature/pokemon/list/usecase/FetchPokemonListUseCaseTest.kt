@@ -3,14 +3,13 @@ package fr.nicopico.pokedex.feature.pokemon.list.usecase
 import com.google.common.truth.Truth.assertThat
 import fr.nicopico.base.tests.CoroutineTestRule
 import fr.nicopico.base.usecase.Result
-import fr.nicopico.pokedex.core.api.clients.PokemonApi
-import fr.nicopico.pokedex.core.api.models.PagedResource
-import fr.nicopico.pokedex.core.api.models.PokemonJson
 import fr.nicopico.pokedex.domain.model.Page
 import fr.nicopico.pokedex.domain.model.Pokemon
+import fr.nicopico.pokedex.domain.repository.PokemonRepository
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
+import io.mockk.slot
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
@@ -26,27 +25,40 @@ class FetchPokemonListUseCaseTest {
     private lateinit var useCase: FetchPokemonListUseCase
 
     @MockK
-    private lateinit var pokemonApi: PokemonApi
+    private lateinit var pokemonRepository: PokemonRepository
     private val pageSize = 20
 
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-        useCase = FetchPokemonListUseCase(pokemonApi, pageSize)
+        useCase = FetchPokemonListUseCase(pokemonRepository, pageSize)
     }
 
     @Test
     fun somePokemonsAreReturned() = runBlocking {
         // Given
-        coEvery { pokemonApi.fetchPokemonList(any(), any()) } returns PagedResource(
-                count = 2,
-                next = null,
-                previous = null,
-                results = listOf(
-                        PokemonJson(name = "Bulbizar", url = "https://pokeapi.co/api/v2/pokemon/1/"),
-                        PokemonJson(name = "Pikachu", url = "https://pokeapi.co/api/v2/pokemon/2/")
+        val pageIndexSlot = slot<Int>()
+        val pageSizeSlot = slot<Int>()
+        coEvery {
+            pokemonRepository.list(capture(pageIndexSlot), capture(pageSizeSlot))
+        } answers {
+            Page(
+                index = pageIndexSlot.captured,
+                totalCount = 2,
+                content = listOf(
+                    Pokemon(
+                        id = 1,
+                        name = "Bulbizar",
+                        illustrationUrl = "https://pokeapi.co/api/v2/pokemon/1/"
+                    ),
+                    Pokemon(
+                        id = 2,
+                        name = "Pikachu",
+                        illustrationUrl = "https://pokeapi.co/api/v2/pokemon/2/"
+                    )
                 )
-        )
+            )
+        }
 
         // When
         val actual = useCase.execute(parameter = 0)

@@ -10,10 +10,10 @@ data class Page<out T>(
 
 typealias PageIndex = Int
 
-fun PageIndex.getOffset(pageSize: Int) = this * pageSize
-fun PageIndex.getLimit(pageSize: Int) = this.getOffset(pageSize) + pageSize
+internal fun PageIndex.getOffset(pageSize: Int) = this * pageSize
+internal fun PageIndex.getLimit(pageSize: Int) = this.getOffset(pageSize) + pageSize
 
-fun <JSON, MODEL> PagedResource<JSON>.toPage(index: PageIndex, mapper: (JSON) -> MODEL): Page<MODEL> =
+internal fun <JSON, MODEL> PagedResource<JSON>.toPage(index: PageIndex, mapper: (JSON) -> MODEL): Page<MODEL> =
     Page(
         index = index,
         totalCount = count,
