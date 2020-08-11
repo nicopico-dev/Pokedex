@@ -1,6 +1,8 @@
 apply plugin: 'jacoco'
 
 // See https://medium.com/@fraggjkee/measuring-unit-test-coverage-in-multi-module-android-projects-using-jacoco-113d201ccb79
+// TODO Check possibly better implementation:
+//   https://docs.gradle.org/6.4-rc-1/samples/sample_jvm_multi_project_with_code_coverage.html
 
 jacoco {
     toolVersion = '0.8.5'
@@ -28,16 +30,15 @@ project.ext {
     ]
 
     jacocoReportConfigAndroid = {
-        def coverageSourceDirs = [
+        sourceDirectories.from = files([
                 "$projectDir/src/main/java",
                 "$projectDir/src/main/kotlin"
-        ]
-        def debugTree = fileTree(
-                dir: "$buildDir/tmp/kotlin-classes/debug",
-                excludes: jacocoFileFilter
-        )
-        sourceDirectories.from = files(coverageSourceDirs)
-        classDirectories.from = files([debugTree])
+        ])
+
+        classDirectories.from = files([
+                fileTree(dir: "$buildDir/tmp/kotlin-classes/debug")
+        ])
+
         executionData.from = fileTree(
                 dir: project.buildDir,
                 includes: [
@@ -82,6 +83,12 @@ private def configureCoverageReport() {
                 destination file("${buildDir}/coverage-report")
             }
         }
+
+        afterEvaluate {
+            classDirectories.from = files(classDirectories.files.collect {
+                fileTree(dir: it, exclude: jacocoFileFilter)
+            })
+        }
     }
 }
 
@@ -112,6 +119,14 @@ private def configureCoverageVerification() {
                     minimum = threshold
                 }
             }
+        }
+
+        // Exclude *files* from the verification
+        // We cannot use [excludes] as it works on packages & classes
+        afterEvaluate {
+            classDirectories.from = files(classDirectories.files.collect {
+                fileTree(dir: it, exclude: jacocoFileFilter)
+            })
         }
     }
 }
