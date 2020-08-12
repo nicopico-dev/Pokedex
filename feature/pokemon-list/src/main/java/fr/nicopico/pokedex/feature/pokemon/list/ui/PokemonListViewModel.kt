@@ -9,7 +9,7 @@ import fr.nicopico.pokedex.domain.model.Pokemon
 import fr.nicopico.pokedex.domain.usecase.FetchPokemonListUseCase
 
 class PokemonListViewModel
-internal constructor(
+constructor(
     private val useCase: FetchPokemonListUseCase
 ) : ViewModel() {
     val pokemons: LiveData<List<Pokemon>> = liveData {

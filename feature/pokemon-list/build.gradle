@@ -56,6 +56,6 @@ dependencies {
 
     testImplementation mods.base.tests
 
-    androidTestImplementation testDeps.android.junit
+    androidTestImplementation testDeps.android.junitExt
     androidTestImplementation testDeps.android.espresso
 }

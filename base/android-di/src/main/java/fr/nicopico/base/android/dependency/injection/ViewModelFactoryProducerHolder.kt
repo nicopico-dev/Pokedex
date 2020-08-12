@@ -8,7 +8,8 @@ object ViewModelFactoryProducerHolder {
 
     val injectedFactoryProducer: FactoryProducer
         get() = _factoryProducer
-            ?: throw IllegalStateException("FactoryProducer must be initialized by calling the init() method")
+            ?: throw IllegalStateException("FactoryProducer must be initialized " +
+                    "by calling ViewModelFactoryProducerHolder.init()")
 
     private var _factoryProducer: FactoryProducer? = null
 

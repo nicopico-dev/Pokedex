@@ -31,14 +31,29 @@ android {
 }
 
 dependencies {
+    implementation mods.base.androidDi
     implementation mods.feature.pokemonList
+
+    // TODO Try to remove these dependencies
+    implementation mods.core.domain
+    implementation mods.core.api
+    implementation deps.network.okhttp3
 
     implementation deps.kotlin.stdlib
     implementation deps.android.coreKtx
     implementation deps.android.appCompat
 
-    testImplementation testDeps.junit
+    implementation deps.koin.androidViewModel
 
-    androidTestImplementation testDeps.android.junit
+    testImplementation testDeps.junit
+    testImplementation testDeps.truth
+    testImplementation testDeps.mockk
+    testImplementation testDeps.koin
+    testImplementation testDeps.android.junitExt
+    testImplementation testDeps.android.robolectric
+
+    testImplementation mods.base.tests
+
+    androidTestImplementation testDeps.android.junitExt
     androidTestImplementation testDeps.android.espresso
 }
