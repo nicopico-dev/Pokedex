@@ -3,8 +3,6 @@ plugins {
     id 'kotlin-android'
 }
 
-
-
 android {
     compileSdkVersion build.compileSdk
     buildToolsVersion build.buildTools
@@ -36,26 +34,13 @@ android {
 }
 
 dependencies {
-    implementation mods.base.androidDi
-    implementation mods.core.domain
-
     implementation deps.kotlin.stdlib
 
-    implementation deps.android.coreKtx
-    implementation deps.android.appCompat
     implementation deps.android.fragmentKtx
-    implementation deps.android.lifecycleLiveDataKtx
-    implementation deps.android.recyclerView
-    implementation deps.android.recyclerViewSelection
-
-    implementation deps.media.coil
 
     testImplementation testDeps.junit
     testImplementation testDeps.truth
     testImplementation testDeps.mockk
 
     testImplementation mods.base.tests
-
-    androidTestImplementation testDeps.android.junit
-    androidTestImplementation testDeps.android.espresso
 }

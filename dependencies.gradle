@@ -14,6 +14,7 @@ ext {
 
     mods = [
             base: [
+                    androidDi: project(":base:android-di"),
                     usecase: project(":base:usecase"),
                     tests: project(":base:tests"),
             ],

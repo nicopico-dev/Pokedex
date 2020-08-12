@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/base" />
+            <option value="$PROJECT_DIR$/base/android-di" />
             <option value="$PROJECT_DIR$/base/tests" />
             <option value="$PROJECT_DIR$/base/usecase" />
             <option value="$PROJECT_DIR$/core" />

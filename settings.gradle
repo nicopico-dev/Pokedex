@@ -1,3 +1,4 @@
+include ':base:android-di'
 include ':base:tests'
 include ':base:usecase'
 include ':core:api'
