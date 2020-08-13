@@ -1,4 +1,4 @@
-package fr.nicopico.pokedex.domain.usecase
+package fr.nicopico.pokedex.feature.pokemon.list.usecase
 
 import com.google.common.truth.Truth.assertThat
 import fr.nicopico.base.tests.CoroutineTestRule

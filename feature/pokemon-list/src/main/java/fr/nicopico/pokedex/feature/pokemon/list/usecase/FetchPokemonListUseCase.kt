@@ -1,4 +1,4 @@
-package fr.nicopico.pokedex.domain.usecase
+package fr.nicopico.pokedex.feature.pokemon.list.usecase
 
 import fr.nicopico.base.usecase.Result
 import fr.nicopico.base.usecase.UseCase

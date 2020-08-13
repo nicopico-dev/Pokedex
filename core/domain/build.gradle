@@ -4,8 +4,6 @@ plugins {
 }
 
 dependencies {
-    api mods.base.usecase
-
     implementation deps.kotlin.stdlib
 
     testImplementation mods.base.tests
