@@ -1,24 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/img_pokemon"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scaleType="centerInside"
-        android:adjustViewBounds="true"
-        tools:src="@tools:sample/backgrounds/scenic"/>
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/txt_pokemon_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        tools:text="@tools:sample/lorem" />
+        <ImageView
+            android:id="@+id/img_pokemon"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:padding="@dimen/space_medium"
+            android:scaleType="centerInside"
+            tools:src="@drawable/pokemon_list_item_placeholder" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/txt_pokemon_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            tools:text="@tools:sample/lorem" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_small"/>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

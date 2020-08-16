@@ -37,6 +37,7 @@ dependencies {
     implementation deps.kotlin.stdlib
 
     implementation deps.android.fragmentKtx
+    implementation deps.android.recyclerView
 
     testImplementation testDeps.junit
     testImplementation testDeps.truth

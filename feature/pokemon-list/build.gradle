@@ -9,6 +9,8 @@ android {
     compileSdkVersion build.compileSdk
     buildToolsVersion build.buildTools
 
+    resourcePrefix 'pokemon_list_'
+
     defaultConfig {
         minSdkVersion build.minSdk
         targetSdkVersion build.targetSdk
@@ -43,8 +45,9 @@ dependencies {
 
     implementation deps.kotlin.stdlib
 
-    implementation deps.android.coreKtx
     implementation deps.android.appCompat
+    implementation deps.android.cardView
+    implementation deps.android.coreKtx
     implementation deps.android.fragmentKtx
     implementation deps.android.lifecycleLiveDataKtx
     implementation deps.android.recyclerView
