@@ -39,6 +39,7 @@ dependencies {
     implementation mods.base.androidDi
     implementation mods.base.usecase
     implementation mods.core.domain
+    implementation mods.core.resources
 
     implementation deps.kotlin.stdlib
 

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import fr.nicopico.pokedex.domain.model.Pokemon
+import fr.nicopico.pokedex.feature.pokemon.list.R
 import fr.nicopico.pokedex.feature.pokemon.list.databinding.PokemonListItemBinding
 
 internal class PokemonAdapter(
@@ -41,7 +42,10 @@ internal class PokemonAdapter(
 
         fun bindTo(item: Pokemon) {
             binding.txtPokemonName.text = item.name
-            binding.imgPokemon.load(item.illustrationUrl)
+            binding.imgPokemon.load(item.illustrationUrl) {
+                placeholder(R.drawable.pokemon_list_item_placeholder)
+                this.crossfade(true)
+            }
         }
     }
 }

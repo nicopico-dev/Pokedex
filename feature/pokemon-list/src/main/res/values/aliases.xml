@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <drawable name="pokemon_list_item_placeholder">@drawable/pokeball</drawable>
+</resources>
