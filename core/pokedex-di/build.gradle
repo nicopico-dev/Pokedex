@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'kotlin-android'
 }
 
@@ -8,13 +8,13 @@ android {
     buildToolsVersion build.buildTools
 
     defaultConfig {
-        applicationId 'fr.nicopico.pokedex'
         minSdkVersion build.minSdk
         targetSdkVersion build.targetSdk
         versionCode 1
         versionName '1.0'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -24,32 +24,29 @@ android {
         }
     }
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+    buildFeatures {
+        viewBinding true
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
     }
 }
 
 dependencies {
-    implementation mods.base.usecase
-    implementation mods.core.pokedexDi
+    api mods.base.androidDi
+    implementation mods.core.domain
+    implementation mods.core.api
     implementation mods.feature.pokemonList
 
-    implementation deps.kotlin.stdlib
-    implementation deps.android.coreKtx
-    implementation deps.android.appCompat
+    implementation deps.network.okhttp3
 
+    implementation deps.kotlin.stdlib
     implementation deps.koin.androidViewModel
 
     testImplementation testDeps.junit
     testImplementation testDeps.truth
     testImplementation testDeps.mockk
-    testImplementation testDeps.koin
-    testImplementation testDeps.android.junitExt
-    testImplementation testDeps.android.robolectric
 
     testImplementation mods.base.tests
-
-    androidTestImplementation testDeps.android.junitExt
-    androidTestImplementation testDeps.android.espresso
 }

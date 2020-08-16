@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import fr.nicopico.base.android.dependency.injection.ViewModelFactoryProducerHolder
+import fr.nicopico.pokedex.di.pokedexModules
 import fr.nicopico.pokedex.feature.pokemon.list.ui.PokemonListViewModel
 import org.koin.android.ext.android.get
 import org.koin.android.ext.koin.androidContext

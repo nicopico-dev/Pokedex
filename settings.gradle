@@ -1,6 +1,7 @@
 include ':base:android-di'
 include ':base:tests'
 include ':base:usecase'
+include ':core:pokedex-di'
 include ':core:api'
 include ':core:domain'
 include ':core:resources'

@@ -1,4 +1,4 @@
-package fr.nicopico.pokedex
+package fr.nicopico.pokedex.di
 
 import fr.nicopico.pokedex.core.api.clients.PokemonApi
 import fr.nicopico.pokedex.core.api.clients.PokemonApiClient
