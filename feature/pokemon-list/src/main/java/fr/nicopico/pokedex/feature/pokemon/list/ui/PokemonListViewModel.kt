@@ -6,7 +6,7 @@ import androidx.lifecycle.liveData
 import fr.nicopico.base.usecase.onFailure
 import fr.nicopico.base.usecase.onSuccess
 import fr.nicopico.pokedex.domain.model.Pokemon
-import fr.nicopico.pokedex.domain.usecase.FetchPokemonListUseCase
+import fr.nicopico.pokedex.feature.pokemon.list.usecase.FetchPokemonListUseCase
 
 class PokemonListViewModel
 constructor(
