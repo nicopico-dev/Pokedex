@@ -3,6 +3,7 @@ include ':base:tests'
 include ':base:usecase'
 include ':core:api'
 include ':core:domain'
+include ':core:resources'
 include ':feature:pokemon-list'
 include ':app'
 rootProject.name = "Pokedex"
