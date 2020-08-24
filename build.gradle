@@ -40,6 +40,7 @@ ext {
     ]
 }
 
+@SuppressWarnings(["unused", "GrMethodMayBeStatic"])
 boolean isAndroidModule(Project project) {
     //boolean isAndroidLibrary = project.plugins.hasPlugin('com.android.library')
     //boolean isAndroidApp = project.plugins.hasPlugin('com.android.application')
@@ -47,6 +48,7 @@ boolean isAndroidModule(Project project) {
     return androidModules.contains(project.name)
 }
 
+@SuppressWarnings(["unused", "GrMethodMayBeStatic"])
 boolean isKotlinModule(Project project) {
     //return project.plugins.hasPlugin('kotlin')
     return kotlinModules.contains(project.name)
