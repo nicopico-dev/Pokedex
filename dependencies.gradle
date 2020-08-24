@@ -40,6 +40,7 @@ ext {
 
     deps = [
             kotlin: [
+                    reflect: "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version",
                     stdlib: "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
                     coroutines: "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutines_version",
             ],
@@ -101,4 +102,13 @@ ext {
 
             koin: "org.koin:koin-test:$koin_version",
     ]
+}
+
+// https://docs.gradle.org/current/dsl/org.gradle.api.artifacts.ResolutionStrategy.html
+configurations.all {
+    resolutionStrategy {
+        // kotlin-reflect is a transitive dependency on several direct dependencies
+        //  force the version here to avoid adding the dependency directly everywhere
+        force deps.kotlin.reflect
+    }
 }
