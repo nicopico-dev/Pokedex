@@ -15,8 +15,8 @@ android {
         applicationId 'fr.nicopico.pokedex'
         minSdkVersion build.minSdk
         targetSdkVersion build.targetSdk
-        versionCode 1
-        versionName '1.0'
+        versionCode versioning.versionCode
+        versionName versioning.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

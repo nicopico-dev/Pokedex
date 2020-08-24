@@ -43,6 +43,7 @@ apply from: "dependencies_check.gradle"
 subprojects {
     apply from: "${rootProject.rootDir}/dependencies.gradle"
     apply from: "${rootProject.rootDir}/static_analysis.gradle"
+    apply from: "${rootProject.rootDir}/versioning.gradle"
 
     afterEvaluate { project ->
         project.apply from: "${rootProject.rootDir}/coverage.gradle"

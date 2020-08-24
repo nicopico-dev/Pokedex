@@ -1,0 +1,6 @@
+import fr.nicopico.gradle.version.VersionFileHandler
+
+def versionFile = file("${rootProject.rootDir}/version.properties")
+ext {
+    versioning = VersionFileHandler.readVersion(versionFile)
+}
