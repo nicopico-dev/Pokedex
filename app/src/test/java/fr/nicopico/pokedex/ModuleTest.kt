@@ -3,6 +3,7 @@ package fr.nicopico.pokedex
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import fr.nicopico.pokedex.di.pokedexModules
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.koin.android.ext.koin.androidContext
