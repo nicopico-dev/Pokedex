@@ -26,10 +26,10 @@ object VersionFileHandler {
     @JvmStatic
     fun writeVersion(versionFile: File, version: Version) {
         val props = Properties()
-        props[PROP_MAJOR] = version.major
-        props[PROP_MINOR] = version.minor
-        props[PROP_PATCH] = version.patch
-        props[PROP_BUILD] = version.build
+        props[PROP_MAJOR] = version.major.toString()
+        props[PROP_MINOR] = version.minor.toString()
+        props[PROP_PATCH] = version.patch.toString()
+        props[PROP_BUILD] = version.build.toString()
 
         props.store(versionFile.writer(charset = Charsets.UTF_8), "Update version")
     }

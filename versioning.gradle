@@ -1,6 +1,47 @@
+import fr.nicopico.gradle.version.VersionExtKt
 import fr.nicopico.gradle.version.VersionFileHandler
 
 def versionFile = file("${rootProject.rootDir}/version.properties")
 ext {
     versioning = VersionFileHandler.readVersion(versionFile)
+}
+
+tasks.register('bumpMajor') {
+    group = 'Versioning'
+    description = 'Bump the major version'
+
+    doLast {
+        def newVersion = VersionExtKt.bumpMajor(versioning)
+        VersionFileHandler.writeVersion(versionFile, newVersion)
+    }
+}
+
+tasks.register('bumpMinor') {
+    group = 'Versioning'
+    description = 'Bump the minor version'
+
+    doLast {
+        def newVersion = VersionExtKt.bumpMinor(versioning)
+        VersionFileHandler.writeVersion(versionFile, newVersion)
+    }
+}
+
+tasks.register('bumpPatch') {
+    group = 'Versioning'
+    description = 'Bump the patch version'
+
+    doLast {
+        def newVersion = VersionExtKt.bumpPatch(versioning)
+        VersionFileHandler.writeVersion(versionFile, newVersion)
+    }
+}
+
+tasks.register('incrementBuild') {
+    group = 'Versioning'
+    description = 'Bump the build version'
+
+    doLast {
+        def newVersion = VersionExtKt.incrementBuild(versioning)
+        VersionFileHandler.writeVersion(versionFile, newVersion)
+    }
 }
