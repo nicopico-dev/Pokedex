@@ -3,6 +3,10 @@ plugins {
     id 'kotlin'
 }
 
+ext {
+    moduleType = 'kotlin'
+}
+
 dependencies {
     implementation deps.kotlin.stdlib
 

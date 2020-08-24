@@ -3,7 +3,9 @@ plugins {
     id 'kotlin-android'
 }
 
-
+ext {
+    moduleType = 'android'
+}
 
 android {
     compileSdkVersion build.compileSdk

@@ -24,35 +24,18 @@ plugins {
     id 'io.gitlab.arturbosch.detekt' version "$detekt_version" apply false
 }
 
-ext {
-    androidModules = [
-            'android-di',
-            'app',
-            'pokemon-list',
-            'pokedex-di',
-            'resources',
-    ]
-
-    kotlinModules = [
-            'api',
-            'domain',
-            'tests',
-            'usecase',
-    ]
-}
-
-@SuppressWarnings(["unused", "GrMethodMayBeStatic"])
-boolean isAndroidModule(Project project) {
+@SuppressWarnings(["unused"])
+static boolean isAndroidModule(Project project) {
     //boolean isAndroidLibrary = project.plugins.hasPlugin('com.android.library')
     //boolean isAndroidApp = project.plugins.hasPlugin('com.android.application')
     //return isAndroidLibrary || isAndroidApp
-    return androidModules.contains(project.name)
+    return project.hasProperty('moduleType') && project.moduleType == 'android'
 }
 
-@SuppressWarnings(["unused", "GrMethodMayBeStatic"])
-boolean isKotlinModule(Project project) {
+@SuppressWarnings(["unused"])
+static boolean isKotlinModule(Project project) {
     //return project.plugins.hasPlugin('kotlin')
-    return kotlinModules.contains(project.name)
+    return project.hasProperty('moduleType') && project.moduleType == 'kotlin'
 }
 
 apply from: "dependencies_check.gradle"
