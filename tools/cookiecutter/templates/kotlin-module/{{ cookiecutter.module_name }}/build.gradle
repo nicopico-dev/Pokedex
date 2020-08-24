@@ -1,0 +1,17 @@
+plugins {
+    id 'java-library'
+    id 'kotlin'
+}
+
+dependencies {
+    implementation deps.kotlin.stdlib
+
+    testImplementation testDeps.junit
+    testImplementation testDeps.truth
+    testImplementation testDeps.mockk
+
+    testImplementation mods.base.tests
+}
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
