@@ -19,6 +19,7 @@ buildscript {
 
 plugins {
     id 'com.github.ben-manes.versions' version '0.29.0'
+    id 'com.github.plnice.canidropjetifier' version '0.5'
     id 'org.jetbrains.kotlin.jvm' version "$kotlin_version" apply false
     id 'io.gitlab.arturbosch.detekt' version "$detekt_version" apply false
 }
