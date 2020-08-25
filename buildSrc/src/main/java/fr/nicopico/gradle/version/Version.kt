@@ -9,8 +9,7 @@ data class Version(
     val versionName: String = "$major.$minor.$patch ($build)"
 
     @Suppress("MagicNumber")
-    val versionCode: Int = major * 1_000_000 +
-            minor * 10_000 +
-            patch * 100 +
-            build
+    val versionCode: Int = major * 10_000 +
+            minor * 100 +
+            patch
 }
