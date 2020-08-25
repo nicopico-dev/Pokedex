@@ -1,76 +1,72 @@
 package fr.nicopico.gradle.version
 
 import fr.nicopico.gradle.version.internal.VersionFileHandler
-import fr.nicopico.gradle.version.internal.bumpMajor
-import fr.nicopico.gradle.version.internal.bumpMinor
-import fr.nicopico.gradle.version.internal.bumpPatch
-import fr.nicopico.gradle.version.internal.incrementBuild
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import java.io.File
+import org.gradle.api.file.RegularFileProperty
+import org.gradle.api.model.ObjectFactory
+import org.gradle.api.provider.Provider
+import org.gradle.kotlin.dsl.task
 
-open class VersioningPluginExtension {
-    var versionFile: Any = "version.properties"
+@Suppress("MemberVisibilityCanBePrivate")
+open class VersioningPluginExtension(objects: ObjectFactory) {
 
-    lateinit var version: Version
+    val versionFile: RegularFileProperty = objects.fileProperty()
 
-    val versionName
-        get() = version.versionName
-    val versionCode
-        get() = version.versionCode
+    //region Outputs
+    val version: Provider<Version> = versionFile.map {
+        VersionFileHandler.readVersion(it.asFile)
+    }
+
+    val versionName: String
+        get() = version.map { it.versionName }.get()
+    val versionCode: Int
+        get() = version.map { it.versionCode }.get()
+    //endregion
 }
 
 private const val TASK_GROUP = "Versioning"
 
 class VersioningPlugin : Plugin<Project> {
     override fun apply(target: Project) {
-        val extension = target.extensions.create("versioning", VersioningPluginExtension::class.java)
+        val extension = target.extensions
+            .create("versioning", VersioningPluginExtension::class.java)
 
-        val versionFile: File = target.rootProject.file(extension.versionFile)
-        extension.version = VersionFileHandler.readVersion(versionFile)
+        // Set versionFile default value
+        extension.versionFile.convention {
+            target.rootProject.file("version.properties")
+        }
 
-        target.task("bumpMajor") {
+        target.task("bumpMajor", UpdateVersionTask::class) {
             group = TASK_GROUP
             description = "Bump the major version"
 
-            doLast {
-                val version = extension.version
-                val newVersion = version.bumpMajor()
-                VersionFileHandler.writeVersion(versionFile, newVersion)
-            }
+            versionPart.set(VersionPart.Major)
+            versionFile.set(extension.versionFile)
         }
 
-        target.task("bumpMinor") {
+        target.task("bumpMinor", UpdateVersionTask::class) {
             group = TASK_GROUP
             description = "Bump the minor version"
 
-            doLast {
-                val version = VersionFileHandler.readVersion(versionFile)
-                val newVersion = version.bumpMinor()
-                VersionFileHandler.writeVersion(versionFile, newVersion)
-            }
+            versionPart.set(VersionPart.Minor)
+            versionFile.set(extension.versionFile)
         }
 
-        target.task("bumpPatch") {
+        target.task("bumpPatch", UpdateVersionTask::class) {
             group = TASK_GROUP
             description = "Bump the patch version"
 
-            doLast {
-                val version = VersionFileHandler.readVersion(versionFile)
-                val newVersion = version.bumpPatch()
-                VersionFileHandler.writeVersion(versionFile, newVersion)
-            }
+            versionPart.set(VersionPart.Patch)
+            versionFile.set(extension.versionFile)
         }
 
-        target.task("incrementBuild") {
+        target.task("incrementBuild", UpdateVersionTask::class) {
             group = TASK_GROUP
             description = "Increment the build number"
 
-            doLast {
-                val version = VersionFileHandler.readVersion(versionFile)
-                val newVersion = version.incrementBuild()
-                VersionFileHandler.writeVersion(versionFile, newVersion)
-            }
+            versionPart.set(VersionPart.Build)
+            versionFile.set(extension.versionFile)
         }
     }
 }
