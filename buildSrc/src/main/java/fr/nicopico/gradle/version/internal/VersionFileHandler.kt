@@ -1,9 +1,10 @@
-package fr.nicopico.gradle.version
+package fr.nicopico.gradle.version.internal
 
+import fr.nicopico.gradle.version.Version
 import java.io.File
 import java.util.*
 
-object VersionFileHandler {
+internal object VersionFileHandler {
     private const val PROP_MAJOR = "VERSION_MAJOR"
     private const val PROP_MINOR = "VERSION_MINOR"
     private const val PROP_PATCH = "VERSION_PATCH"

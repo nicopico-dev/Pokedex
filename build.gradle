@@ -39,11 +39,11 @@ static boolean isKotlinModule(Project project) {
 }
 
 apply from: "dependencies_check.gradle"
+apply from: "versioning.gradle"
 
 subprojects {
     apply from: "${rootProject.rootDir}/dependencies.gradle"
     apply from: "${rootProject.rootDir}/static_analysis.gradle"
-    apply from: "${rootProject.rootDir}/versioning.gradle"
 
     afterEvaluate { project ->
         project.apply from: "${rootProject.rootDir}/coverage.gradle"
