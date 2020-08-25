@@ -37,6 +37,13 @@ class VersioningPlugin : Plugin<Project> {
             target.rootProject.file("version.properties")
         }
 
+        target.task("printVersion", PrintVersionTask::class) {
+            group = TASK_GROUP
+            description = "Print current version"
+
+            versionFile.set(extension.versionFile)
+        }
+
         target.task("bumpMajor", UpdateVersionTask::class) {
             group = TASK_GROUP
             description = "Bump the major version"
