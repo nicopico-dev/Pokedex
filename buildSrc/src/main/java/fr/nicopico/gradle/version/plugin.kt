@@ -8,9 +8,10 @@ import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.Provider
 import org.gradle.kotlin.dsl.task
 
-@Suppress("MemberVisibilityCanBePrivate")
+@Suppress("MemberVisibilityCanBePrivate", "unused")
 open class VersioningPluginExtension(objects: ObjectFactory) {
 
+    @Suppress("UnstableApiUsage")
     val versionFile: RegularFileProperty = objects.fileProperty()
 
     //region Outputs

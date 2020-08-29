@@ -10,6 +10,7 @@ import org.gradle.api.tasks.TaskAction
 
 open class PrintVersionTask : DefaultTask() {
 
+    @Suppress("UnstableApiUsage")
     @InputFile
     val versionFile: RegularFileProperty = project.objects.fileProperty()
 

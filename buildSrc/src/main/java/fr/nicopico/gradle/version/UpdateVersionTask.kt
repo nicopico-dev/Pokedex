@@ -6,7 +6,6 @@ import fr.nicopico.gradle.version.internal.bumpMajor
 import fr.nicopico.gradle.version.internal.bumpMinor
 import fr.nicopico.gradle.version.internal.bumpPatch
 import org.gradle.api.DefaultTask
-import org.gradle.api.GradleException
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.provider.Provider
@@ -16,6 +15,7 @@ import org.gradle.kotlin.dsl.property
 
 open class UpdateVersionTask : DefaultTask() {
 
+    @Suppress("UnstableApiUsage")
     @InputFile
     val versionFile: RegularFileProperty = project.objects.fileProperty()
 
