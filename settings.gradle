@@ -6,5 +6,5 @@ include ':modules:core:api'
 include ':modules:core:domain'
 include ':modules:core:resources'
 include ':modules:feature:pokemon-list'
-include ':modules:app'
+include ':app'
 rootProject.name = "Pokedex"
