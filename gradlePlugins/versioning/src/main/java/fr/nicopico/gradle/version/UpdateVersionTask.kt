@@ -10,7 +10,6 @@ import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.*
-import org.gradle.execution.commandline.TaskConfigurationException
 import org.gradle.kotlin.dsl.property
 
 open class UpdateVersionTask : DefaultTask() {
@@ -40,11 +39,6 @@ open class UpdateVersionTask : DefaultTask() {
             VersionPart.Minor -> currentVersion.bumpMinor()
             VersionPart.Patch -> currentVersion.bumpPatch()
             VersionPart.Build -> currentVersion.incrementBuild()
-            else -> throw TaskConfigurationException(
-                path,
-                "versionPart property must be set",
-                null
-            )
         }
     }
 }
