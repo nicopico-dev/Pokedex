@@ -13,7 +13,7 @@ kotlinDslPluginOptions {
 
 gradlePlugin {
     plugins.register("versioning") {
-        id = "versioning"
+        id = "fr.nicopico.gradle.versioning"
         implementationClass = "fr.nicopico.gradle.version.VersioningPlugin"
     }
 }
