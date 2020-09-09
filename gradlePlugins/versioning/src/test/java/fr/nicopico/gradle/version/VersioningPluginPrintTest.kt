@@ -2,7 +2,6 @@ package fr.nicopico.gradle.version
 
 import com.google.common.truth.Truth.assertThat
 import fr.nicopico.gradle.version.internal.VersionFileHandler
-import io.mockk.*
 import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.TaskOutcome
 import org.junit.Before
@@ -11,7 +10,7 @@ import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import java.io.File
 
-class VersioningPluginTest {
+class VersioningPluginPrintTest {
 
     @get:Rule
     val testProjectDir = TemporaryFolder()
@@ -27,8 +26,6 @@ class VersioningPluginTest {
             
         """.trimIndent())
     }
-
-    //region printVersion
 
     @Test
     fun `printVersion will fail if property file is found`() {
@@ -136,6 +133,4 @@ class VersioningPluginTest {
         // Then
         assertThat(result.task(":printVersion")?.outcome).isEqualTo(TaskOutcome.FAILED)
     }
-
-    //endregion
 }
