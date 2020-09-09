@@ -2,6 +2,7 @@ package fr.nicopico.gradle.version
 
 import com.google.common.truth.Truth.assertThat
 import fr.nicopico.gradle.version.internal.VersionFileHandler
+import io.mockk.*
 import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.TaskOutcome
 import org.junit.Before
@@ -26,6 +27,8 @@ class VersioningPluginTest {
             
         """.trimIndent())
     }
+
+    //region printVersion
 
     @Test
     fun `printVersion will fail if property file is found`() {
@@ -62,7 +65,7 @@ class VersioningPluginTest {
     }
 
     @Test
-    fun `printVersion will use the file specified and print the versionName`() {
+    fun `printVersion will use the file specified by path and print the versionName`() {
         // Given
         val propertyFile = testProjectDir.newFile("something.properties")
         val version = Version(1, 2, 3, 42)
@@ -75,7 +78,31 @@ class VersioningPluginTest {
             
         """.trimIndent())
 
-        print("buildFile:\n" + buildFile.readText())
+        // When
+        val result = GradleRunner.create()
+            .withProjectDir(testProjectDir.root)
+            .withPluginClasspath()
+            .withArguments("printVersion")
+            .build()
+
+        // Then
+        assertThat(result.task(":printVersion")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
+        assertThat(result.output).contains(version.versionName)
+    }
+
+    @Test
+    fun `printVersion will use the file specified and print the versionName`() {
+        // Given
+        val propertyFile = testProjectDir.newFile("something.properties")
+        val version = Version(1, 2, 3, 42)
+        VersionFileHandler.writeVersion(propertyFile, version)
+
+        buildFile.appendText("""
+            versioning {
+                versionFile file('something.properties')
+            }
+            
+        """.trimIndent())
 
         // When
         val result = GradleRunner.create()
@@ -88,4 +115,27 @@ class VersioningPluginTest {
         assertThat(result.task(":printVersion")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
         assertThat(result.output).contains(version.versionName)
     }
+
+    @Test
+    fun `printVersion will fail if specified property file is not found`() {
+        // Given
+        buildFile.appendText("""
+            versioning {
+                versionFile 'something.properties'
+            }
+            
+        """.trimIndent())
+
+        // When
+        val result = GradleRunner.create()
+            .withProjectDir(testProjectDir.root)
+            .withPluginClasspath()
+            .withArguments("printVersion")
+            .buildAndFail()
+
+        // Then
+        assertThat(result.task(":printVersion")?.outcome).isEqualTo(TaskOutcome.FAILED)
+    }
+
+    //endregion
 }

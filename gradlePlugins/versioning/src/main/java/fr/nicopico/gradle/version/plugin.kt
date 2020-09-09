@@ -9,10 +9,18 @@ import org.gradle.api.provider.Provider
 import org.gradle.kotlin.dsl.task
 
 @Suppress("MemberVisibilityCanBePrivate", "unused")
-open class VersioningPluginExtension(objects: ObjectFactory) {
+open class VersioningPluginExtension(
+    private val project: Project,
+    objects: ObjectFactory
+) {
 
     @Suppress("UnstableApiUsage")
     val versionFile: RegularFileProperty = objects.fileProperty()
+
+    /** Allow easier configuration */
+    fun versionFile(file: Any) {
+        versionFile.set(project.file(file))
+    }
 
     //region Outputs
     val version: Provider<Version> = versionFile.map {
@@ -31,7 +39,7 @@ private const val TASK_GROUP = "Versioning"
 class VersioningPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         val extension = target.extensions
-            .create("versioning", VersioningPluginExtension::class.java)
+            .create("versioning", VersioningPluginExtension::class.java, target)
 
         // Set versionFile default value
         extension.versionFile.convention {
