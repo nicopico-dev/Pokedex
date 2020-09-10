@@ -67,6 +67,32 @@ class VersioningPluginBumpTest(
     }
 
     @Test
+    fun `update the provided version file correctly`() {
+        // Given
+        // Note: we cannot use mocks as GradleRunner is running the project on a different classpath
+        val versionFile = testProjectDir.newFile("something.properties")
+        VersionFileHandler.writeVersion(versionFile, version)
+
+        buildFile.appendText("""
+            versioning {
+                versionFile 'something.properties'
+            }
+            
+        """.trimIndent())
+
+        // When
+        val result = GradleRunner.create()
+            .withProjectDir(testProjectDir.root)
+            .withPluginClasspath()
+            .withArguments(taskName)
+            .build()
+
+        // Then
+        Truth.assertThat(result.task(":$taskName")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
+        Truth.assertThat(VersionFileHandler.readVersion(versionFile)).isEqualTo(updatedVersion)
+    }
+
+    @Test
     fun `fail if the version file does not exist`() {
         // Given
 
