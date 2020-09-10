@@ -46,6 +46,13 @@ class VersioningPlugin : Plugin<Project> {
             target.rootProject.file("version.properties")
         }
 
+        target.task("createVersionFile", CreateVersionFileTask::class) {
+            group = TASK_GROUP
+            description = "Create a property file to hold the version"
+
+            versionFile.set(extension.versionFile)
+        }
+
         target.task("printVersion", PrintVersionTask::class) {
             group = TASK_GROUP
             description = "Print current version"
