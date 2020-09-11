@@ -1,0 +1,6 @@
+{
+  "plugin_name": "",
+  "plugin_classname": "{{ cookiecutter.plugin_name | capitalize }}Plugin",
+  "package_name": "",
+  "package_dir": "{{ cookiecutter.package_name | replace('.', '/') }}"
+}
