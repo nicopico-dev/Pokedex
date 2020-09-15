@@ -1,4 +1,5 @@
 includeBuild 'gradlePlugins/versioning'
+includeBuild 'gradlePlugins/keystoreConfig'
 
 include ':modules:base:android-di'
 include ':modules:base:tests'

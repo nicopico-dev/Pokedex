@@ -12,6 +12,11 @@
                   <project path="$PROJECT_DIR$/gradlePlugins/versioning" />
                 </projects>
               </build>
+              <build path="$PROJECT_DIR$/gradlePlugins/keystoreConfig" name="keystoreConfig">
+                <projects>
+                  <project path="$PROJECT_DIR$/gradlePlugins/keystoreConfig" />
+                </projects>
+              </build>
             </builds>
           </compositeBuild>
         </compositeConfiguration>
@@ -23,6 +28,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/gradlePlugins/keystoreConfig" />
             <option value="$PROJECT_DIR$/gradlePlugins/versioning" />
             <option value="$PROJECT_DIR$/modules" />
             <option value="$PROJECT_DIR$/modules/base" />
