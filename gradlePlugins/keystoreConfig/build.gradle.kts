@@ -6,6 +6,7 @@ plugins {
 
 repositories {
     jcenter()
+    google()
 }
 
 kotlinDslPluginOptions {
@@ -20,6 +21,8 @@ gradlePlugin {
 }
 
 dependencies {
+    implementation("com.android.tools.build:gradle:4.0.1")
+
     testImplementation("junit:junit:4.13")
     testImplementation("io.mockk:mockk:1.10.0")
     testImplementation("com.google.truth:truth:1.0.1")

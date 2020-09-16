@@ -27,19 +27,80 @@ class KeystoreConfigPluginTest {
     }
 
     @Test
-    fun `test plugin`() {
+    fun `KeystoreConfig are created`() {
         // Given
-        val taskName = "someTask"
+        buildFile.appendText("""
+            keystoreConfigs {
+                debug {
+                    configFile 'debug_keystore.properties'
+                }
+                
+                release {
+                    configFile = 'release_keystore.properties'
+                }
+            }
+            
+        """.trimIndent())
+
+        buildFile.appendText("""
+            task checkKeystoreConfigOutput {
+                doLast {
+                    println("debug: " + (keystoreConfigs.debug != null ? "OK" : "KO"))
+                    println("release: " + (keystoreConfigs.release != null ? "OK" : "KO"))
+                }
+            }
+            
+        """.trimIndent())
 
         // When
         val result = GradleRunner.create()
             .withProjectDir(testProjectDir.root)
             .withPluginClasspath()
-            .withArguments(taskName)
+            .withArguments("checkKeystoreConfigOutput")
             .build()
 
         // Then
-        assertThat(result.task(":$taskName")?.outcome)
-            .isIn(listOf(TaskOutcome.SUCCESS, TaskOutcome.UP_TO_DATE))
+        assertThat(result.task(":checkKeystoreConfigOutput")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
+        assertThat(result.output).contains("debug: OK")
+        assertThat(result.output).contains("release: OK")
+    }
+
+    @Test
+    fun `KeystoreConfig's signingConfigs are populated`() {
+        // Given
+        buildFile.appendText("""
+            keystoreConfigs {
+                debug {
+                    configFile 'debug_keystore.properties'
+                }
+                
+                release {
+                    configFile = 'release_keystore.properties'
+                }
+            }
+            
+        """.trimIndent())
+
+        buildFile.appendText("""
+            task checkKeystoreConfigOutput {
+                doLast {
+                    println("debug signingConfig: " + (keystoreConfigs.debug.signingConfig != null ? "OK" : "KO"))
+                    println("release signingConfig: " + (keystoreConfigs.release.signingConfig != null ? "OK" : "KO"))
+                }
+            }
+            
+        """.trimIndent())
+
+        // When
+        val result = GradleRunner.create()
+            .withProjectDir(testProjectDir.root)
+            .withPluginClasspath()
+            .withArguments("checkKeystoreConfigOutput")
+            .build()
+
+        // Then
+        assertThat(result.task(":checkKeystoreConfigOutput")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
+        assertThat(result.output).contains("debug signingConfig: OK")
+        assertThat(result.output).contains("release signingConfig: OK")
     }
 }
