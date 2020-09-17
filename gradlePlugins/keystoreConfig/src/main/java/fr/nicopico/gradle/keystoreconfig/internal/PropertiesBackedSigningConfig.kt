@@ -1,14 +1,13 @@
 package fr.nicopico.gradle.keystoreconfig.internal
 
 import com.android.builder.model.SigningConfig
-import org.gradle.api.Project
 import java.io.File
 import java.security.KeyStore
 import java.util.*
 
 internal class PropertiesBackedSigningConfig(
     private val name: String,
-    private val project: Project,
+    private val fileFinder: FileFinder,
     private val propertyFile: File
 ) : SigningConfig {
 
@@ -20,7 +19,7 @@ internal class PropertiesBackedSigningConfig(
 
     override fun getName(): String = name
 
-    override fun getStoreFile(): File = project.file(props.getProperty(PROP_STORE_FILE))
+    override fun getStoreFile(): File = fileFinder(props.getProperty(PROP_STORE_FILE))
 
     override fun getStorePassword(): String = props.getProperty(PROP_STORE_PASSWORD)
 
