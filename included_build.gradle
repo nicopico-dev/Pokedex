@@ -1,0 +1,16 @@
+// Add tasks to test included builds from the command line
+
+tasks.register("testIncludedBuilds") {
+    group "Included builds"
+    dependsOn gradle.includedBuilds*.task(":test")
+}
+
+tasks.register("testVersioning") {
+    group "Included builds"
+    dependsOn gradle.includedBuild("versioning").task(":test")
+}
+
+tasks.register("testKeystoreConfig") {
+    group "Included builds"
+    dependsOn gradle.includedBuilds("keystoreConfig").task(":test")
+}
