@@ -23,6 +23,16 @@ class KeystoreConfigPluginTest {
                 id 'fr.nicopico.gradle.keystoreconfig'
             }
             
+            task printDebugSigningConfig {
+                doLast {
+                    def signingConfig = keystoreConfigs.debug.signingConfig
+                    println("store file: " + signingConfig.storeFile)
+                    println("store password: " + signingConfig.storePassword)
+                    println("key alias: " + signingConfig.keyAlias)
+                    println("key password: " + signingConfig.keyPassword)
+                }
+            }
+            
         """.trimIndent())
     }
 
@@ -45,8 +55,8 @@ class KeystoreConfigPluginTest {
         buildFile.appendText("""
             task checkKeystoreConfigOutput {
                 doLast {
-                    println("debug: " + (keystoreConfigs.debug != null ? "OK" : "KO"))
-                    println("release: " + (keystoreConfigs.release != null ? "OK" : "KO"))
+                    println("debug: " + (keystoreConfigs.debug.signingConfig != null ? "OK" : "KO"))
+                    println("release: " + (keystoreConfigs.release.signingConfig != null ? "OK" : "KO"))
                 }
             }
             
@@ -66,26 +76,24 @@ class KeystoreConfigPluginTest {
     }
 
     @Test
-    fun `KeystoreConfig's signingConfigs are populated`() {
+    fun `KeystoreConfig's signingConfig is populated from the property file`() {
         // Given
+        testProjectDir.newFolder("keystores")
+        testProjectDir.newFile("keystores/debug.keystore")
+
+        val configFile = testProjectDir.newFile("debug_keystore.properties")
+
+        configFile.writeText("""
+            STORE_FILE=keystores/debug.keystore
+            STORE_PASSWORD=store password
+            KEY_ALIAS=key alias
+            KEY_PASSWORD=key password
+        """.trimIndent())
+
         buildFile.appendText("""
             keystoreConfigs {
                 debug {
                     configFile 'debug_keystore.properties'
-                }
-                
-                release {
-                    configFile = 'release_keystore.properties'
-                }
-            }
-            
-        """.trimIndent())
-
-        buildFile.appendText("""
-            task checkKeystoreConfigOutput {
-                doLast {
-                    println("debug signingConfig: " + (keystoreConfigs.debug.signingConfig != null ? "OK" : "KO"))
-                    println("release signingConfig: " + (keystoreConfigs.release.signingConfig != null ? "OK" : "KO"))
                 }
             }
             
@@ -95,12 +103,163 @@ class KeystoreConfigPluginTest {
         val result = GradleRunner.create()
             .withProjectDir(testProjectDir.root)
             .withPluginClasspath()
-            .withArguments("checkKeystoreConfigOutput")
+            .withArguments("printDebugSigningConfig")
             .build()
 
         // Then
-        assertThat(result.task(":checkKeystoreConfigOutput")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
-        assertThat(result.output).contains("debug signingConfig: OK")
-        assertThat(result.output).contains("release signingConfig: OK")
+        assertThat(result.task(":printDebugSigningConfig")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
+        assertThat(result.output).containsMatch("store file: .*?/keystores/debug\\.keystore")
+        assertThat(result.output).contains("store password: store password")
+        assertThat(result.output).contains("key alias: key alias")
+        assertThat(result.output).contains("key password: key password")
+    }
+
+    @Test
+    fun `KeystoreConfig fails if the property file does not exists`() {
+        // Given
+        buildFile.appendText("""
+            keystoreConfigs {
+                debug {
+                    configFile 'debug_keystore.properties'
+                }
+            }
+            
+        """.trimIndent())
+
+        // When
+        val result = GradleRunner.create()
+            .withProjectDir(testProjectDir.root)
+            .withPluginClasspath()
+            .withArguments("printDebugSigningConfig")
+            .buildAndFail()
+
+        // Then
+        assertThat(result.task(":printDebugSigningConfig")?.outcome).isEqualTo(TaskOutcome.FAILED)
+    }
+
+    @Test
+    fun `KeystoreConfig's signingConfig is ok even if the keystore does not exists`() {
+        // Given
+        val configFile = testProjectDir.newFile("debug_keystore.properties")
+
+        configFile.writeText("""
+            STORE_FILE=keystores/debug.keystore
+            STORE_PASSWORD=store password
+            KEY_ALIAS=key alias
+            KEY_PASSWORD=key password
+        """.trimIndent())
+
+        buildFile.appendText("""
+            keystoreConfigs {
+                debug {
+                    configFile 'debug_keystore.properties'
+                }
+            }
+            
+        """.trimIndent())
+
+        // When
+        val result = GradleRunner.create()
+            .withProjectDir(testProjectDir.root)
+            .withPluginClasspath()
+            .withArguments("printDebugSigningConfig")
+            .build()
+
+        // Then
+        assertThat(result.task(":printDebugSigningConfig")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
+        assertThat(result.output).containsMatch("store file: .*?/keystores/debug\\.keystore")
+        assertThat(result.output).contains("store password: store password")
+        assertThat(result.output).contains("key alias: key alias")
+        assertThat(result.output).contains("key password: key password")
+    }
+
+    @Test
+    fun `KeystoreConfig's signingConfig is populated from default environment variables`() {
+        // Given
+        buildFile.appendText("""
+            keystoreConfigs {
+                debug {
+                    fromEnv "default"
+                }
+            }
+            
+        """.trimIndent())
+
+        @Suppress("UnstableApiUsage")
+        val result = GradleRunner.create()
+            .withProjectDir(testProjectDir.root)
+            .withPluginClasspath()
+            .withEnvironment(mapOf(
+                "KEYSTORE_FILE" to "keystores/debug.keystore",
+                "KEYSTORE_PASSWORD" to "store password",
+                "KEYSTORE_KEY_ALIAS" to "key alias",
+                "KEYSTORE_KEY_PASSWORD" to "key password"
+            ))
+            .withArguments("printDebugSigningConfig")
+            .build()
+
+        // Then
+        assertThat(result.task(":printDebugSigningConfig")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
+        assertThat(result.output).containsMatch("store file: .*?/keystores/debug\\.keystore")
+        assertThat(result.output).contains("store password: store password")
+        assertThat(result.output).contains("key alias: key alias")
+        assertThat(result.output).contains("key password: key password")
+    }
+
+    @Test
+    fun `KeystoreConfig's signingConfig is populated from default environment variables with prefix`() {
+        // Given
+        buildFile.appendText("""
+            keystoreConfigs {
+                debug {
+                    fromEnv "withPrefix"
+                    envPrefix "TEST_"
+                }
+            }
+            
+        """.trimIndent())
+
+        @Suppress("UnstableApiUsage")
+        val result = GradleRunner.create()
+            .withProjectDir(testProjectDir.root)
+            .withPluginClasspath()
+            .withEnvironment(mapOf(
+                "TEST_KEYSTORE_FILE" to "keystores/debug.keystore",
+                "TEST_KEYSTORE_PASSWORD" to "store password",
+                "TEST_KEYSTORE_KEY_ALIAS" to "key alias",
+                "TEST_KEYSTORE_KEY_PASSWORD" to "key password"
+            ))
+            .withArguments("printDebugSigningConfig")
+            .build()
+
+        // Then
+        assertThat(result.task(":printDebugSigningConfig")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
+        assertThat(result.output).containsMatch("store file: .*?/keystores/debug\\.keystore")
+        assertThat(result.output).contains("store password: store password")
+        assertThat(result.output).contains("key alias: key alias")
+        assertThat(result.output).contains("key password: key password")
+    }
+
+    @Test
+    fun `KeystoreConfig fails if the environment variable do not exist`() {
+        // Given
+        buildFile.appendText("""
+            keystoreConfigs {
+                debug {
+                    fromEnv "default"
+                }
+            }
+            
+        """.trimIndent())
+
+        @Suppress("UnstableApiUsage")
+        val result = GradleRunner.create()
+            .withProjectDir(testProjectDir.root)
+            .withPluginClasspath()
+            .withArguments("printDebugSigningConfig")
+            .buildAndFail()
+
+        // Then
+        assertThat(result.task(":printDebugSigningConfig")?.outcome).isEqualTo(TaskOutcome.FAILED)
     }
 }
