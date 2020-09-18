@@ -12,5 +12,5 @@ tasks.register("testVersioning") {
 
 tasks.register("testKeystoreConfig") {
     group "Included builds"
-    dependsOn gradle.includedBuilds("keystoreConfig").task(":test")
+    dependsOn gradle.includedBuild("keystoreConfig").task(":test")
 }
