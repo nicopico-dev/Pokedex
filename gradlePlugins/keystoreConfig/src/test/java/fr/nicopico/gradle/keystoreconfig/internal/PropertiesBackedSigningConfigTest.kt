@@ -21,7 +21,7 @@ class PropertiesBackedSigningConfigTest {
         }
     }
 
-    private fun createSigningConfig(propertyFile: File) = PropertiesBackedSigningConfig(
+    private fun createSigningConfig(propertyFile: File): SigningConfig = PropertiesBackedSigningConfig(
         "signingConfig",
         fileFinder,
         propertyFile
