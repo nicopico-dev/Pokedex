@@ -174,12 +174,17 @@ class KeystoreConfigPluginTest {
     }
 
     @Test
-    fun `KeystoreConfig's signingConfig is populated from default environment variables`() {
+    fun `KeystoreConfig's signingConfig is populated from environment variables`() {
         // Given
         buildFile.appendText("""
             keystoreConfigs {
                 debug {
-                    fromEnv "default"
+                    envVars {
+                        storeFile "KEYSTORE_FILE"
+                        storePassword "KEYSTORE_PASSWORD"
+                        keyAlias "KEYSTORE_KEY_ALIAS"
+                        keyPassword "KEYSTORE_KEY_PASSWORD"
+                    }
                 }
             }
             
@@ -207,46 +212,17 @@ class KeystoreConfigPluginTest {
     }
 
     @Test
-    fun `KeystoreConfig's signingConfig is populated from default environment variables with prefix`() {
-        // Given
-        buildFile.appendText("""
-            keystoreConfigs {
-                debug {
-                    fromEnv "withPrefix"
-                    envPrefix "TEST_"
-                }
-            }
-            
-        """.trimIndent())
-
-        @Suppress("UnstableApiUsage")
-        val result = GradleRunner.create()
-            .withProjectDir(testProjectDir.root)
-            .withPluginClasspath()
-            .withEnvironment(mapOf(
-                "TEST_KEYSTORE_FILE" to "keystores/debug.keystore",
-                "TEST_KEYSTORE_PASSWORD" to "store password",
-                "TEST_KEYSTORE_KEY_ALIAS" to "key alias",
-                "TEST_KEYSTORE_KEY_PASSWORD" to "key password"
-            ))
-            .withArguments("printDebugSigningConfig")
-            .build()
-
-        // Then
-        assertThat(result.task(":printDebugSigningConfig")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
-        assertThat(result.output).containsMatch("store file: .*?/keystores/debug\\.keystore")
-        assertThat(result.output).contains("store password: store password")
-        assertThat(result.output).contains("key alias: key alias")
-        assertThat(result.output).contains("key password: key password")
-    }
-
-    @Test
     fun `KeystoreConfig fails if the environment variable do not exist`() {
         // Given
         buildFile.appendText("""
             keystoreConfigs {
                 debug {
-                    fromEnv "default"
+                    envVars {
+                        storeFile "KEYSTORE_FILE"
+                        storePassword "KEYSTORE_PASSWORD"
+                        keyAlias "KEYSTORE_KEY_ALIAS"
+                        keyPassword "KEYSTORE_KEY_PASSWORD"
+                    }
                 }
             }
             

@@ -42,26 +42,6 @@ class EnvironmentBackedSigningConfigTest {
     @Test
     fun `Retrieve relevant information from the environment variables`() {
         // Given
-        val variableNames = VariableNames()
-        every { envGetter.invoke(variableNames.storeFile) } returns "keystores/some.keystore"
-        every { envGetter.invoke(variableNames.storePassword) } returns "store password"
-        every { envGetter.invoke(variableNames.keyAlias) } returns "key alias"
-        every { envGetter.invoke(variableNames.keyPassword) } returns "key password"
-
-        // When
-        val signingConfig = createSigningConfig(variableNames)
-
-        // Then
-        assertThat(signingConfig.storeFile).isEqualTo(File(testProjectDir.root, "keystores/some.keystore"))
-        assertThat(signingConfig.storePassword).isEqualTo("store password")
-        assertThat(signingConfig.keyAlias).isEqualTo("key alias")
-        assertThat(signingConfig.keyPassword).isEqualTo("key password")
-        assertThat(signingConfig.isSigningReady).isTrue()
-    }
-
-    @Test
-    fun `Retrieve relevant information from the environment variables (custom names)`() {
-        // Given
         val variableNames = VariableNames("A", "B", "C", "D")
         every { envGetter.invoke(variableNames.storeFile) } returns "keystores/some.keystore"
         every { envGetter.invoke(variableNames.storePassword) } returns "store password"
@@ -82,7 +62,7 @@ class EnvironmentBackedSigningConfigTest {
     @Test
     fun `Mark signing config as not-ready if an environment variable is not set`() {
         // Given
-        val variableNames = VariableNames()
+        val variableNames = VariableNames("A", "B", "C", "D")
         every { envGetter.invoke(variableNames.storeFile) } returns "keystores/some.keystore"
         every { envGetter.invoke(variableNames.storePassword) } returns "store password"
         every { envGetter.invoke(variableNames.keyAlias) } returns null
