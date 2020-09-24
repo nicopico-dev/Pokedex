@@ -1,6 +1,9 @@
 formatting:
   NoWildcardImports:
     active: false
+  ChainWrapping:
+    active: false
+    autoCorrect: false
 
 style:
   WildcardImport:
