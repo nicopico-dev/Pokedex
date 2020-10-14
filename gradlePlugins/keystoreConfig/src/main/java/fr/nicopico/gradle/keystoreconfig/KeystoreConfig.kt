@@ -5,10 +5,10 @@ import fr.nicopico.gradle.keystoreconfig.internal.DEFAULT_ENV_GETTER
 import fr.nicopico.gradle.keystoreconfig.internal.EnvironmentBackendSigningConfig
 import fr.nicopico.gradle.keystoreconfig.internal.EnvironmentBackendSigningConfig.VariableNames
 import fr.nicopico.gradle.keystoreconfig.internal.PropertiesBackedSigningConfig
+import fr.nicopico.gradle.keystoreconfig.internal.SimpleSigningConfig
 import fr.nicopico.gradle.keystoreconfig.internal.createFileFinder
 import groovy.lang.Closure
 import org.gradle.api.Named
-import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Project
 
 class KeystoreConfig(
@@ -18,15 +18,17 @@ class KeystoreConfig(
 
     override fun getName(): String = name
 
+    //region Properties file
     var configFile: Any? = null
 
-    var envVars: EnvironmentConfig? = null
-
-    // region Easier configuration
     @Suppress("unused")
     fun configFile(file: Any) {
         this.configFile = file
     }
+    //endregion
+
+    //region Environment variable
+    var envVars: EnvironmentConfig? = null
 
     @Suppress("unused")
     fun envVars(configuration: EnvironmentConfig.Builder.() -> Unit) {
@@ -49,6 +51,15 @@ class KeystoreConfig(
     }
     // endregion
 
+    //region Debug keystore
+    var debugKeystore: Any? = null
+
+    @Suppress("unused")
+    fun debugKeystore(file: Any) {
+        this.debugKeystore = file
+    }
+    //endregion
+
     //region Outputs
 
     @Suppress("unused")
@@ -59,9 +70,10 @@ class KeystoreConfig(
     private fun buildSigningConfig(): SigningConfig {
         val fileFinder = createFileFinder(project)
 
-        // Freeze var properties
+        // Freeze nullable var properties
         val configFile = this.configFile
         val envVars = this.envVars
+        val debugKeystore = this.debugKeystore
 
         return when {
             configFile != null -> {
@@ -82,6 +94,15 @@ class KeystoreConfig(
                     ),
                     DEFAULT_ENV_GETTER,
                     fileFinder
+                )
+            }
+            debugKeystore != null -> {
+                SimpleSigningConfig(
+                    name,
+                    project.file(debugKeystore),
+                    storePassword = "android",
+                    keyAlias = "androiddebugkey",
+                    keyPassword = "android"
                 )
             }
             else -> {

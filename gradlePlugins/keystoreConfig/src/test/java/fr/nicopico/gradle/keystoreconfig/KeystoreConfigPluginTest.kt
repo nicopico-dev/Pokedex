@@ -238,4 +238,31 @@ class KeystoreConfigPluginTest {
         // Then
         assertThat(result.task(":printDebugSigningConfig")?.outcome).isEqualTo(TaskOutcome.FAILED)
     }
+
+    @Test
+    fun `KeystoreConfig also to quickly configure a debug keystore`() {
+        // Given
+        buildFile.appendText("""
+            keystoreConfigs {
+                debug {
+                    debugKeystore 'keystores/debug.keystore'
+                }
+            }
+            
+        """.trimIndent())
+
+        @Suppress("UnstableApiUsage")
+        val result = GradleRunner.create()
+            .withProjectDir(testProjectDir.root)
+            .withPluginClasspath()
+            .withArguments("printDebugSigningConfig")
+            .build()
+
+        // Then
+        assertThat(result.task(":printDebugSigningConfig")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
+        assertThat(result.output).containsMatch("store file: .*?/keystores/debug\\.keystore")
+        assertThat(result.output).contains("store password: android")
+        assertThat(result.output).contains("key alias: androiddebugkey")
+        assertThat(result.output).contains("key password: android")
+    }
 }
