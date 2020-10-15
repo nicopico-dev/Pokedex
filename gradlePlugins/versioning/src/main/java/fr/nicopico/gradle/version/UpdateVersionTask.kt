@@ -7,10 +7,8 @@ import fr.nicopico.gradle.version.internal.bumpPatch
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.Property
-import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputFile
-import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.TaskAction
 import org.gradle.kotlin.dsl.property
 
@@ -23,10 +21,8 @@ open class UpdateVersionTask : DefaultTask() {
     @Input
     val versionPart: Property<VersionPart> = project.objects.property()
 
-    @Internal
-    val version: Provider<Version> = versionFile.map {
-        VersionFileHandler.readVersion(it.asFile)
-    }
+    @Input
+    val version: Property<Version> = project.objects.property()
 
     @TaskAction
     fun updateVersion() {

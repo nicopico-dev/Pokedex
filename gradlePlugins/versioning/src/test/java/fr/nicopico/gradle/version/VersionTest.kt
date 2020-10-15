@@ -9,6 +9,30 @@ import org.junit.Test
 class VersionTest {
 
     @Test
+    fun `versionName contains all 3 parts`() {
+        // Given
+        val version = Version(1, 2, 3)
+
+        // When
+        val versionName = version.versionName
+
+        // Then
+        assertThat(versionName).isEqualTo("1.2.3")
+    }
+
+    @Test
+    fun `version suffix is appended at the end of the versionName`() {
+        // Given
+        val version = Version(1, 2, 3, suffix = "rc")
+
+        // When
+        val versionName = version.versionName
+
+        // Then
+        assertThat(versionName).isEqualTo("1.2.3rc")
+    }
+
+    @Test
     fun `bumpMajor() reset all other parts except build`() {
         // Given
         val baseVersion = Version(1, 2, 3)
@@ -57,5 +81,17 @@ class VersionTest {
         // Then
         assertThat(major.versionCode).isGreaterThan(minor.versionCode)
         assertThat(minor.versionCode).isGreaterThan(patch.versionCode)
+    }
+
+    @Test
+    fun `versionCodes is not influenced by versionCode`() {
+        // Given
+        val baseVersion = Version(1, 2, 3)
+
+        // When
+        val withSuffix = baseVersion.copy(suffix = "rc")
+
+        // Then
+        assertThat(baseVersion.versionCode).isEqualTo(withSuffix.versionCode)
     }
 }

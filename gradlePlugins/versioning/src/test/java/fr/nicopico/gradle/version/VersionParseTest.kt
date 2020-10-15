@@ -20,9 +20,9 @@ class VersionParseTest(
             arrayOf("1.2.3", Version(1, 2, 3)),
             arrayOf("10.200.3000", Version(10, 200, 3000)),
             arrayOf("3.0.1", Version(3, 0, 1)),
-            arrayOf("3.0.1b", Version(3, 0, 1)),
+            arrayOf("3.0.1b", Version(3, 0, 1, "b")),
             arrayOf("4.1", Version(4, 1, 0)),
-            arrayOf("4.1-rc", Version(4, 1, 0)),
+            arrayOf("4.1-rc", Version(4, 1, 0, "-rc")),
             arrayOf("not-a-version", null),
             arrayOf("abc 1.2.3", null)
         )
