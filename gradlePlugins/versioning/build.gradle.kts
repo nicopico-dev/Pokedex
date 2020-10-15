@@ -20,7 +20,7 @@ gradlePlugin {
 }
 
 dependencies {
-    testImplementation("junit:junit:4.13")
-    testImplementation("io.mockk:mockk:1.10.0")
+    testImplementation("junit:junit:4.13.1")
+    testImplementation("io.mockk:mockk:1.10.2")
     testImplementation("com.google.truth:truth:1.0.1")
 }

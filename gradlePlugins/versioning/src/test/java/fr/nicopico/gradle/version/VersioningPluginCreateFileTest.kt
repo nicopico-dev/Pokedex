@@ -10,7 +10,7 @@ import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import java.io.File
 
-class VersioningPluginInitTest {
+class VersioningPluginCreateFileTest {
 
     @get:Rule
     val testProjectDir = TemporaryFolder()

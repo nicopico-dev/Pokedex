@@ -3,7 +3,8 @@ formatting:
     active: false
   ChainWrapping:
     active: false
-    autoCorrect: false
+  NoBlankLineBeforeRbrace:
+    active: false
 
 style:
   WildcardImport:

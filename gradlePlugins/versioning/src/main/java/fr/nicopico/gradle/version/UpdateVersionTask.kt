@@ -1,6 +1,5 @@
 package fr.nicopico.gradle.version
 
-import fr.nicopico.gradle.version.internal.*
 import fr.nicopico.gradle.version.internal.VersionFileHandler
 import fr.nicopico.gradle.version.internal.bumpMajor
 import fr.nicopico.gradle.version.internal.bumpMinor
@@ -9,7 +8,10 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.provider.Provider
-import org.gradle.api.tasks.*
+import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.InputFile
+import org.gradle.api.tasks.Internal
+import org.gradle.api.tasks.TaskAction
 import org.gradle.kotlin.dsl.property
 
 open class UpdateVersionTask : DefaultTask() {
