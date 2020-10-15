@@ -31,7 +31,7 @@ class VersioningPluginOutputTest {
     fun `extension will contains version information after configuration`() {
         // Given
         val propertyFile = testProjectDir.newFile("version.properties")
-        val version = Version(1, 2, 3, 42)
+        val version = Version(1, 2, 3)
         VersionFileHandler.writeVersion(propertyFile, version)
 
         // Create a task to print versioning extension properties

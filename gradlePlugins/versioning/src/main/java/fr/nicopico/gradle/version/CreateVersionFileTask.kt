@@ -24,11 +24,12 @@ open class CreateVersionFileTask : DefaultTask() {
             throw GradleException("Version file $actualFile already exists")
         } else {
             val version = initialVersion?.let {
-                try { Version.parse(it) }
-                catch (_ : IllegalArgumentException) {
+                try {
+                    Version.parse(it)
+                } catch (_: IllegalArgumentException) {
                     throw GradleException("provided `initialVersion` is invalid ($initialVersion)")
                 }
-            } ?: Version(0, 1, 0, 0)
+            } ?: Version(0, 1, 0)
             VersionFileHandler.writeVersion(actualFile, version)
         }
     }

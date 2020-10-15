@@ -45,7 +45,7 @@ class VersioningPluginInitTest {
         assertThat(versionFile.exists())
 
         val version = VersionFileHandler.readVersion(versionFile)
-        assertThat(version).isEqualTo(Version(0, 1, 0, 0))
+        assertThat(version).isEqualTo(Version(0, 1, 0))
     }
 
     @Test
@@ -66,7 +66,7 @@ class VersioningPluginInitTest {
         assertThat(versionFile.exists())
 
         val version = VersionFileHandler.readVersion(versionFile)
-        assertThat(version).isEqualTo(Version(1, 2, 3, 0))
+        assertThat(version).isEqualTo(Version(1, 2, 3))
     }
 
     @Test
@@ -112,14 +112,14 @@ class VersioningPluginInitTest {
         assertThat(versionFile.exists())
 
         val version = VersionFileHandler.readVersion(versionFile)
-        assertThat(version).isEqualTo(Version(0, 1, 0, 0))
+        assertThat(version).isEqualTo(Version(0, 1, 0))
     }
 
     @Test
     fun `running createVersionFile task will fail if version|properties file exists`() {
         // Given
         val propertyFile = testProjectDir.newFile("version.properties")
-        val version = Version(1, 2, 3, 42)
+        val version = Version(1, 2, 3)
         VersionFileHandler.writeVersion(propertyFile, version)
 
         // When
@@ -138,7 +138,7 @@ class VersioningPluginInitTest {
     fun `running createVersionFile task will fail if the provided file exists`() {
         // Given
         val propertyFile = testProjectDir.newFile("something.properties")
-        val version = Version(1, 2, 3, 42)
+        val version = Version(1, 2, 3)
         VersionFileHandler.writeVersion(propertyFile, version)
 
         buildFile.appendText("""

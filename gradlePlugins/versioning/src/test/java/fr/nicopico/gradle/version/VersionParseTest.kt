@@ -16,12 +16,13 @@ class VersionParseTest(
         @Parameters(name = "Parsing {0} should give {1}")
         @JvmStatic
         fun parameters() = listOf(
-            arrayOf("0.0.0", Version(0, 0, 0, 0)),
-            arrayOf("1.2.3", Version(1, 2, 3, 0)),
-            arrayOf("10.200.3000", Version(10, 200, 3000, 0)),
-            arrayOf("3.0.1", Version(3, 0, 1, 0)),
-            arrayOf("3.0.1b", Version(3, 0, 1, 0)),
-            arrayOf("4.1", Version(4, 1, 0, 0)),
+            arrayOf("0.0.0", Version(0, 0, 0)),
+            arrayOf("1.2.3", Version(1, 2, 3)),
+            arrayOf("10.200.3000", Version(10, 200, 3000)),
+            arrayOf("3.0.1", Version(3, 0, 1)),
+            arrayOf("3.0.1b", Version(3, 0, 1)),
+            arrayOf("4.1", Version(4, 1, 0)),
+            arrayOf("4.1-rc", Version(4, 1, 0)),
             arrayOf("not-a-version", null),
             arrayOf("abc 1.2.3", null)
         )

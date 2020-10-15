@@ -83,13 +83,5 @@ class VersioningPlugin : Plugin<Project> {
             versionPart.set(VersionPart.Patch)
             versionFile.set(extension.versionFile)
         }
-
-        target.task("incrementBuild", UpdateVersionTask::class) {
-            group = TASK_GROUP
-            description = "Increment the build number"
-
-            versionPart.set(VersionPart.Build)
-            versionFile.set(extension.versionFile)
-        }
     }
 }

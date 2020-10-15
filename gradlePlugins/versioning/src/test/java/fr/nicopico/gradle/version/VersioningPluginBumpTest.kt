@@ -20,15 +20,14 @@ class VersioningPluginBumpTest(
 ) {
 
     companion object {
-        private val version = Version(1, 2, 3, 41)
+        private val version = Version(1, 2, 3)
 
         @JvmStatic
         @Parameters(name = "task {0}")
         fun parameters() = listOf(
             arrayOf("bumpMajor", version.bumpMajor()),
             arrayOf("bumpMinor", version.bumpMinor()),
-            arrayOf("bumpPatch", version.bumpPatch()),
-            arrayOf("incrementBuild", version.incrementBuild())
+            arrayOf("bumpPatch", version.bumpPatch())
         )
     }
 

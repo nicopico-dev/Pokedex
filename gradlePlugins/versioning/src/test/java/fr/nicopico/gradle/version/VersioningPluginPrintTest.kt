@@ -46,7 +46,7 @@ class VersioningPluginPrintTest {
     fun `printVersion will use "version|properties" by default and print the versionName`() {
         // Given
         val propertyFile = testProjectDir.newFile("version.properties")
-        val version = Version(1, 2, 3, 42)
+        val version = Version(1, 2, 3)
         VersionFileHandler.writeVersion(propertyFile, version)
 
         // When
@@ -65,7 +65,7 @@ class VersioningPluginPrintTest {
     fun `printVersion will use the file specified by path and print the versionName`() {
         // Given
         val propertyFile = testProjectDir.newFile("something.properties")
-        val version = Version(1, 2, 3, 42)
+        val version = Version(1, 2, 3)
         VersionFileHandler.writeVersion(propertyFile, version)
 
         buildFile.appendText("""
@@ -91,7 +91,7 @@ class VersioningPluginPrintTest {
     fun `printVersion will use the file specified and print the versionName`() {
         // Given
         val propertyFile = testProjectDir.newFile("something.properties")
-        val version = Version(1, 2, 3, 42)
+        val version = Version(1, 2, 3)
         VersionFileHandler.writeVersion(propertyFile, version)
 
         buildFile.appendText("""

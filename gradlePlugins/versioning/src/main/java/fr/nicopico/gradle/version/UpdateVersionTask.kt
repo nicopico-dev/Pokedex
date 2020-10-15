@@ -38,7 +38,6 @@ open class UpdateVersionTask : DefaultTask() {
             VersionPart.Major -> currentVersion.bumpMajor()
             VersionPart.Minor -> currentVersion.bumpMinor()
             VersionPart.Patch -> currentVersion.bumpPatch()
-            VersionPart.Build -> currentVersion.incrementBuild()
         }
     }
 }

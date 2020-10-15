@@ -4,5 +4,4 @@ enum class VersionPart {
     Major,
     Minor,
     Patch,
-    Build
 }
