@@ -7,33 +7,87 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
+import org.junit.runner.RunWith
+import org.junit.runners.Parameterized
+import org.junit.runners.Parameterized.Parameters
 import java.io.File
 
-class KeystoreConfigPluginIntegrationTest {
+typealias EnvPreparation = (GradleRunner, TemporaryFolder) -> Unit
+
+@RunWith(Parameterized::class)
+class KeystoreConfigPluginIntegrationTest(
+    private val label: String,
+    private val keystoreConfig: String,
+    private val envPreparation: EnvPreparation
+) {
 
     @get:Rule
     val testProjectDir = TemporaryFolder()
     lateinit var buildFile: File
 
+    companion object {
+        // Array type must be explicit otherwise the compiler fails as if it expected an Array<String>
+        @Suppress("RemoveExplicitTypeArguments")
+        @Parameters(name = "Keystore config from {0} can be passed to android buildTypes")
+        @JvmStatic
+        fun parameters() = listOf(
+            arrayOf<Any>(
+                "properties",
+                "configFile 'debug_keystore.properties'",
+                { _: GradleRunner, testProjectDir: TemporaryFolder ->
+                    val configFile = testProjectDir.newFile("debug_keystore.properties")
+
+                    configFile.writeText("""
+                        STORE_FILE=keystores/debug.keystore
+                        STORE_PASSWORD=store password
+                        KEY_ALIAS=key alias
+                        KEY_PASSWORD=key password
+                    """.trimIndent())
+                    Unit
+                }
+            ),
+            arrayOf<Any>(
+                "envVar",
+                """
+                    envVars {
+                        storeFile "KEYSTORE_FILE"
+                        storePassword "KEYSTORE_PASSWORD"
+                        keyAlias "KEYSTORE_KEY_ALIAS"
+                        keyPassword "KEYSTORE_KEY_PASSWORD"
+                    }
+                """.trimIndent(),
+                { gradleEnv: GradleRunner, _: TemporaryFolder ->
+                    @Suppress("UnstableApiUsage")
+                    gradleEnv.withEnvironment(mapOf(
+                        "KEYSTORE_FILE" to "keystores/debug.keystore",
+                        "KEYSTORE_PASSWORD" to "store password",
+                        "KEYSTORE_KEY_ALIAS" to "key alias",
+                        "KEYSTORE_KEY_PASSWORD" to "key password"
+                    ))
+                    Unit
+                }
+            ),
+            arrayOf<Any>(
+                "debugKeystore",
+                "debugKeystore project.file('keystores/debug.keystore')",
+                { _: GradleRunner, _: TemporaryFolder -> Unit }
+            )
+        )
+    }
+
     @Before
     fun setUp() {
         buildFile = testProjectDir.newFile("build.gradle")
+
+        testProjectDir.newFolder("keystores")
+        testProjectDir.newFile("keystores/debug.keystore")
     }
 
     @Test
-    fun `SigningConfigs can be passed to android buildTypes`() {
+    fun test() {
         // Given
-        testProjectDir.newFolder("keystores")
-        testProjectDir.newFile("keystores/debug.keystore")
-
-        val configFile = testProjectDir.newFile("debug_keystore.properties")
-
-        configFile.writeText("""
-            STORE_FILE=keystores/debug.keystore
-            STORE_PASSWORD=store password
-            KEY_ALIAS=key alias
-            KEY_PASSWORD=key password
-        """.trimIndent())
+        val gradleEnv = GradleRunner.create()
+        envPreparation.invoke(gradleEnv, testProjectDir)
 
         buildFile.writeText("""
             plugins {
@@ -43,7 +97,7 @@ class KeystoreConfigPluginIntegrationTest {
             
             keystores {
                 debug {
-                    configFile 'debug_keystore.properties'
+                    $keystoreConfig
                 }
             }
             
@@ -69,7 +123,7 @@ class KeystoreConfigPluginIntegrationTest {
         """.trimIndent())
 
         // When
-        val result = GradleRunner.create()
+        val result = gradleEnv
             .withProjectDir(testProjectDir.root)
             .withPluginClasspath()
             .withArguments(":stubTask")
