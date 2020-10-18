@@ -1,20 +1,15 @@
 package fr.nicopico.gradle.keystoreconfig.internal
 
 import java.security.KeyStore
-import com.android.build.gradle.internal.dsl.SigningConfig as SigningConfigDsl
-import com.android.builder.model.SigningConfig as SigningConfigInterface
+import com.android.build.api.dsl.SigningConfig as SigningConfigDsl
 
+@Suppress("UnstableApiUsage")
 internal abstract class SigningConfigBase(
     private val name: String
-) : SigningConfigDsl(name), SigningConfigInterface {
+) : SigningConfigDsl {
 
     override fun getName(): String = name
-
-    override fun getStoreType(): String = KeyStore.getDefaultType()
-    override fun isV1SigningEnabled(): Boolean = true
-    override fun isV2SigningEnabled(): Boolean = true
-    override fun isSigningReady(): Boolean = storeFile != null
-            && storePassword != null
-            && keyAlias != null
-            && keyPassword != null
+    override var storeType: String? = KeyStore.getDefaultType()
+    override var isV1SigningEnabled: Boolean = true
+    override var isV2SigningEnabled: Boolean = true
 }

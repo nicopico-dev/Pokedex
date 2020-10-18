@@ -1,6 +1,6 @@
 package fr.nicopico.gradle.keystoreconfig.internal
 
-import com.android.builder.model.SigningConfig
+import com.android.build.api.dsl.SigningConfig
 import com.google.common.truth.Truth.assertThat
 import fr.nicopico.gradle.keystoreconfig.accessAnyField
 import fr.nicopico.gradle.keystoreconfig.internal.EnvironmentBackendSigningConfig.VariableNames
@@ -14,6 +14,7 @@ import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import java.io.File
 
+@Suppress("UnstableApiUsage")
 class EnvironmentBackedSigningConfigTest {
 
     @get:Rule
@@ -57,11 +58,10 @@ class EnvironmentBackedSigningConfigTest {
         assertThat(signingConfig.storePassword).isEqualTo("store password")
         assertThat(signingConfig.keyAlias).isEqualTo("key alias")
         assertThat(signingConfig.keyPassword).isEqualTo("key password")
-        assertThat(signingConfig.isSigningReady).isTrue()
     }
 
     @Test
-    fun `Fail on access if an environment variable is not set`() {
+    fun `Fail on access if the environment variable is not set`() {
         // Given
         val variableNames = VariableNames("A", "B", "C", "D")
         every { envGetter.invoke(variableNames.storeFile) } returns "keystores/some.keystore"

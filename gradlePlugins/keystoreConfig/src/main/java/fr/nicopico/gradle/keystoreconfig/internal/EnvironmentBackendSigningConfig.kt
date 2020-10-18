@@ -2,6 +2,7 @@ package fr.nicopico.gradle.keystoreconfig.internal
 
 import java.io.File
 
+@Suppress("UnstableApiUsage")
 internal class EnvironmentBackendSigningConfig(
     name: String,
     private val variableNames: VariableNames,
@@ -9,17 +10,21 @@ internal class EnvironmentBackendSigningConfig(
     private val fileFinder: FileFinder
 ) : SigningConfigBase(name) {
 
-    override fun getStoreFile(): File =
-        extractValue { storeFile }.let(fileFinder)
+    override var storeFile: File?
+        get() = extractValue { storeFile }.let(fileFinder)
+        set(_) { throw UnsupportedOperationException("Read-only property") }
 
-    override fun getStorePassword(): String =
-        extractValue { storePassword }
+    override var storePassword: String?
+        get() = extractValue { storePassword }
+        set(_) { throw UnsupportedOperationException("Read-only property") }
 
-    override fun getKeyAlias(): String =
-        extractValue { keyAlias }
+    override var keyAlias: String?
+        get() = extractValue { keyAlias }
+        set(_) { throw UnsupportedOperationException("Read-only property") }
 
-    override fun getKeyPassword(): String =
-        extractValue { keyPassword }
+    override var keyPassword: String?
+        get() = extractValue { keyPassword }
+        set(_) { throw UnsupportedOperationException("Read-only property") }
 
     private fun extractValue(what: VariableNames.() -> String): String {
         val variableName = variableNames.what()

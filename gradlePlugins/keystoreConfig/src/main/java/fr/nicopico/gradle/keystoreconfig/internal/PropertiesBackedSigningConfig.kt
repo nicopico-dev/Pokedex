@@ -3,6 +3,7 @@ package fr.nicopico.gradle.keystoreconfig.internal
 import java.io.File
 import java.util.*
 
+@Suppress("UnstableApiUsage")
 internal class PropertiesBackedSigningConfig(
     name: String,
     private val fileFinder: FileFinder,
@@ -24,13 +25,21 @@ internal class PropertiesBackedSigningConfig(
         }
     }
 
-    override fun getStoreFile(): File = fileFinder(props.getProperty(PROP_STORE_FILE))
+    override var storeFile: File?
+        get() = fileFinder(props.getProperty(PROP_STORE_FILE))
+        set(_) { throw UnsupportedOperationException("Read-only property") }
 
-    override fun getStorePassword(): String = props.getProperty(PROP_STORE_PASSWORD)
+    override var storePassword: String?
+        get() = props.getProperty(PROP_STORE_PASSWORD)
+        set(_) { throw UnsupportedOperationException("Read-only property") }
 
-    override fun getKeyAlias(): String = props.getProperty(PROP_KEY_ALIAS)
+    override var keyAlias: String?
+        get() = props.getProperty(PROP_KEY_ALIAS)
+        set(_) { throw UnsupportedOperationException("Read-only property") }
 
-    override fun getKeyPassword(): String = props.getProperty(PROP_KEY_PASSWORD)
+    override var keyPassword: String?
+        get() = props.getProperty(PROP_KEY_PASSWORD)
+        set(_) { throw UnsupportedOperationException("Read-only property") }
 
     companion object {
         private const val PROP_STORE_FILE = "STORE_FILE"

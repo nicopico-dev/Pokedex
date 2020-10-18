@@ -1,6 +1,6 @@
 package fr.nicopico.gradle.keystoreconfig.internal
 
-import com.android.builder.model.SigningConfig
+import com.android.build.api.dsl.SigningConfig
 import com.google.common.truth.Truth.assertThat
 import fr.nicopico.gradle.keystoreconfig.accessAnyField
 import org.junit.Rule
@@ -9,6 +9,7 @@ import org.junit.rules.TemporaryFolder
 import java.io.File
 import java.io.FileNotFoundException
 
+@Suppress("UnstableApiUsage")
 class PropertiesBackedSigningConfigTest {
 
     @get:Rule
@@ -48,7 +49,6 @@ class PropertiesBackedSigningConfigTest {
         assertThat(signingConfig.storePassword).isEqualTo("store password 123\$%%&33")
         assertThat(signingConfig.keyAlias).isEqualTo("key alias")
         assertThat(signingConfig.keyPassword).isEqualTo("key password ù*€")
-        assertThat(signingConfig.isSigningReady).isTrue()
     }
 
     @Test

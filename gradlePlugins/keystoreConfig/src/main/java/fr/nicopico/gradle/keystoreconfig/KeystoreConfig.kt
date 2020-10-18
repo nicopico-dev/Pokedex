@@ -1,16 +1,13 @@
 package fr.nicopico.gradle.keystoreconfig
 
-import com.android.builder.model.SigningConfig
-import fr.nicopico.gradle.keystoreconfig.internal.DEFAULT_ENV_GETTER
-import fr.nicopico.gradle.keystoreconfig.internal.EnvironmentBackendSigningConfig
+import com.android.build.api.dsl.SigningConfig
+import fr.nicopico.gradle.keystoreconfig.internal.*
 import fr.nicopico.gradle.keystoreconfig.internal.EnvironmentBackendSigningConfig.VariableNames
-import fr.nicopico.gradle.keystoreconfig.internal.PropertiesBackedSigningConfig
-import fr.nicopico.gradle.keystoreconfig.internal.SimpleSigningConfig
-import fr.nicopico.gradle.keystoreconfig.internal.createFileFinder
 import groovy.lang.Closure
 import org.gradle.api.Named
 import org.gradle.api.Project
 
+@Suppress("UnstableApiUsage")
 class KeystoreConfig(
     private val name: String,
     private val project: Project
