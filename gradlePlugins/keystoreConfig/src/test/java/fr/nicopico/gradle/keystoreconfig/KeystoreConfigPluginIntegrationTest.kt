@@ -38,10 +38,10 @@ class KeystoreConfigPluginIntegrationTest {
         buildFile.writeText("""
             plugins {
                 id 'com.android.application'
-                id 'fr.nicopico.gradle.keystore-config'
+                id 'fr.nicopico.gradle.keystores'
             }
             
-            keystoreConfigs {
+            keystores {
                 debug {
                     configFile 'debug_keystore.properties'
                 }
@@ -55,7 +55,7 @@ class KeystoreConfigPluginIntegrationTest {
             
                 buildTypes {
                     debug {
-                        signingConfig keystoreConfigs.debug.signingConfig
+                        signingConfig keystores.debug.signingConfig
                     }
                 }
             }

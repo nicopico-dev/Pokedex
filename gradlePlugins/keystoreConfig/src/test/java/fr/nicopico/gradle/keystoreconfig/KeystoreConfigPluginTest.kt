@@ -20,12 +20,12 @@ class KeystoreConfigPluginTest {
         buildFile = testProjectDir.newFile("build.gradle")
         buildFile.writeText("""
             plugins {
-                id 'fr.nicopico.gradle.keystore-config'
+                id 'fr.nicopico.gradle.keystores'
             }
             
             task printDebugSigningConfig {
                 doLast {
-                    def signingConfig = keystoreConfigs.debug.signingConfig
+                    def signingConfig = keystores.debug.signingConfig
                     println("store file: " + signingConfig.storeFile)
                     println("store password: " + signingConfig.storePassword)
                     println("key alias: " + signingConfig.keyAlias)
@@ -40,7 +40,7 @@ class KeystoreConfigPluginTest {
     fun `KeystoreConfig are created and populated`() {
         // Given
         buildFile.appendText("""
-            keystoreConfigs {
+            keystores {
                 debug {
                     configFile 'debug_keystore.properties'
                 }
@@ -54,8 +54,8 @@ class KeystoreConfigPluginTest {
 
         buildFile.appendText("""
             task checkKeystoreConfigOutput {
-                def debugSigningConfig = keystoreConfigs.debug.signingConfig
-                def releaseSigningConfig = keystoreConfigs.release.signingConfig
+                def debugSigningConfig = keystores.debug.signingConfig
+                def releaseSigningConfig = keystores.release.signingConfig
             
                 doLast {
                     println("debug: " + (debugSigningConfig != null ? "OK" : "KO"))
@@ -94,7 +94,7 @@ class KeystoreConfigPluginTest {
         """.trimIndent())
 
         buildFile.appendText("""
-            keystoreConfigs {
+            keystores {
                 debug {
                     configFile 'debug_keystore.properties'
                 }
@@ -133,7 +133,7 @@ class KeystoreConfigPluginTest {
         """.trimIndent())
 
         buildFile.appendText("""
-            keystoreConfigs {
+            keystores {
                 debug {
                     configFile project.file('debug_keystore.properties')
                 }
@@ -160,7 +160,7 @@ class KeystoreConfigPluginTest {
     fun `KeystoreConfig fails if the property file does not exists`() {
         // Given
         buildFile.appendText("""
-            keystoreConfigs {
+            keystores {
                 debug {
                     configFile 'debug_keystore.properties'
                 }
@@ -192,7 +192,7 @@ class KeystoreConfigPluginTest {
         """.trimIndent())
 
         buildFile.appendText("""
-            keystoreConfigs {
+            keystores {
                 debug {
                     configFile 'debug_keystore.properties'
                 }
@@ -219,7 +219,7 @@ class KeystoreConfigPluginTest {
     fun `KeystoreConfig's signingConfig is populated from environment variables`() {
         // Given
         buildFile.appendText("""
-            keystoreConfigs {
+            keystores {
                 debug {
                     envVars {
                         storeFile "KEYSTORE_FILE"
@@ -257,7 +257,7 @@ class KeystoreConfigPluginTest {
     fun `KeystoreConfig fails if the environment variable do not exist`() {
         // Given
         buildFile.appendText("""
-            keystoreConfigs {
+            keystores {
                 debug {
                     envVars {
                         storeFile "KEYSTORE_FILE"
@@ -285,7 +285,7 @@ class KeystoreConfigPluginTest {
     fun `KeystoreConfig also to quickly configure a debug keystore (passed as string)`() {
         // Given
         buildFile.appendText("""
-            keystoreConfigs {
+            keystores {
                 debug {
                     debugKeystore 'keystores/debug.keystore'
                 }
@@ -312,7 +312,7 @@ class KeystoreConfigPluginTest {
     fun `KeystoreConfig also to quickly configure a debug keystore (passed as file)`() {
         // Given
         buildFile.appendText("""
-            keystoreConfigs {
+            keystores {
                 debug {
                     debugKeystore project.file('keystores/debug.keystore')
                 }

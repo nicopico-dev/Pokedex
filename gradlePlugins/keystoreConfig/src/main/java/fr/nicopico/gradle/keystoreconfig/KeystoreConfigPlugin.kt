@@ -9,6 +9,6 @@ class KeystoreConfigPlugin : Plugin<Project> {
             KeystoreConfig(name, target)
         }
 
-        target.extensions.add("keystoreConfigs", configContainer)
+        target.extensions.add("keystores", configContainer)
     }
 }

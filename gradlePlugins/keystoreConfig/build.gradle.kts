@@ -14,8 +14,8 @@ kotlinDslPluginOptions {
 }
 
 gradlePlugin {
-    plugins.register("keystoreConfig") {
-        id = "fr.nicopico.gradle.keystore-config"
+    plugins.register("keystores") {
+        id = "fr.nicopico.gradle.keystores"
         implementationClass = "fr.nicopico.gradle.keystoreconfig.KeystoreConfigPlugin"
     }
 }
