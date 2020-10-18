@@ -1,11 +1,12 @@
 package fr.nicopico.gradle.keystoreconfig.internal
 
-import com.android.builder.model.SigningConfig
 import java.security.KeyStore
+import com.android.build.gradle.internal.dsl.SigningConfig as SigningConfigDsl
+import com.android.builder.model.SigningConfig as SigningConfigInterface
 
 internal abstract class SigningConfigBase(
     private val name: String
-) : SigningConfig {
+) : SigningConfigDsl(name), SigningConfigInterface {
 
     override fun getName(): String = name
 
