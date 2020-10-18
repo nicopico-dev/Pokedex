@@ -15,7 +15,7 @@ kotlinDslPluginOptions {
 
 gradlePlugin {
     plugins.register("keystoreConfig") {
-        id = "fr.nicopico.gradle.keystoreconfig"
+        id = "fr.nicopico.gradle.keystore-config"
         implementationClass = "fr.nicopico.gradle.keystoreconfig.KeystoreConfigPlugin"
     }
 }
@@ -23,7 +23,7 @@ gradlePlugin {
 dependencies {
     implementation("com.android.tools.build:gradle:4.0.1")
 
-    testImplementation("junit:junit:4.13")
-    testImplementation("io.mockk:mockk:1.10.0")
+    testImplementation("junit:junit:4.13.1")
+    testImplementation("io.mockk:mockk:1.10.2")
     testImplementation("com.google.truth:truth:1.0.1")
 }

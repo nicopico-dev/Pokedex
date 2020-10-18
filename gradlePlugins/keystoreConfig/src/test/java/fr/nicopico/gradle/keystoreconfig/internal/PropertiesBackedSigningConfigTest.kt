@@ -2,6 +2,7 @@ package fr.nicopico.gradle.keystoreconfig.internal
 
 import com.android.builder.model.SigningConfig
 import com.google.common.truth.Truth.assertThat
+import fr.nicopico.gradle.keystoreconfig.accessAnyField
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
@@ -26,11 +27,6 @@ class PropertiesBackedSigningConfigTest {
         fileFinder,
         propertyFile
     )
-
-    private fun SigningConfig.accessAnyField() {
-        // Access any property to load the properties data
-        this.storeFile
-    }
 
     @Test
     fun `Retrieve relevant information from the property file`() {

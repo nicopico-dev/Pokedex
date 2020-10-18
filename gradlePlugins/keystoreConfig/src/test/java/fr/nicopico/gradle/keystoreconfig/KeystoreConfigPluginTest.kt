@@ -20,7 +20,7 @@ class KeystoreConfigPluginTest {
         buildFile = testProjectDir.newFile("build.gradle")
         buildFile.writeText("""
             plugins {
-                id 'fr.nicopico.gradle.keystoreconfig'
+                id 'fr.nicopico.gradle.keystore-config'
             }
             
             task printDebugSigningConfig {

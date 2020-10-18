@@ -2,6 +2,7 @@ package fr.nicopico.gradle.keystoreconfig.internal
 
 import com.android.builder.model.SigningConfig
 import com.google.common.truth.Truth.assertThat
+import fr.nicopico.gradle.keystoreconfig.accessAnyField
 import fr.nicopico.gradle.keystoreconfig.internal.EnvironmentBackendSigningConfig.VariableNames
 import io.mockk.MockKAnnotations
 import io.mockk.every
@@ -60,7 +61,7 @@ class EnvironmentBackedSigningConfigTest {
     }
 
     @Test
-    fun `Mark signing config as not-ready if an environment variable is not set`() {
+    fun `Fail on access if an environment variable is not set`() {
         // Given
         val variableNames = VariableNames("A", "B", "C", "D")
         every { envGetter.invoke(variableNames.storeFile) } returns "keystores/some.keystore"
@@ -70,8 +71,14 @@ class EnvironmentBackedSigningConfigTest {
 
         // When
         val signingConfig = createSigningConfig(variableNames)
+        var error: Exception? = null
+        try {
+            signingConfig.accessAnyField()
+        } catch (e: Exception) {
+            error = e
+        }
 
         // Then
-        assertThat(signingConfig.isSigningReady).isFalse()
+        assertThat(error).isInstanceOf(IllegalStateException::class.java)
     }
 }
