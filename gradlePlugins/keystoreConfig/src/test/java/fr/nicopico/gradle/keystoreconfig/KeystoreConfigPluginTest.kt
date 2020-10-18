@@ -76,7 +76,7 @@ class KeystoreConfigPluginTest {
     }
 
     @Test
-    fun `KeystoreConfig's signingConfig is populated from the property file`() {
+    fun `KeystoreConfig's signingConfig is populated from the property file (passed as string)`() {
         // Given
         testProjectDir.newFolder("keystores")
         testProjectDir.newFile("keystores/debug.keystore")
@@ -94,6 +94,45 @@ class KeystoreConfigPluginTest {
             keystoreConfigs {
                 debug {
                     configFile 'debug_keystore.properties'
+                }
+            }
+            
+        """.trimIndent())
+
+        // When
+        val result = GradleRunner.create()
+            .withProjectDir(testProjectDir.root)
+            .withPluginClasspath()
+            .withArguments("printDebugSigningConfig")
+            .build()
+
+        // Then
+        assertThat(result.task(":printDebugSigningConfig")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
+        assertThat(result.output).containsMatch("store file: .*?/keystores/debug\\.keystore")
+        assertThat(result.output).contains("store password: store password")
+        assertThat(result.output).contains("key alias: key alias")
+        assertThat(result.output).contains("key password: key password")
+    }
+
+    @Test
+    fun `KeystoreConfig's signingConfig is populated from the property file (passed as file)`() {
+        // Given
+        testProjectDir.newFolder("keystores")
+        testProjectDir.newFile("keystores/debug.keystore")
+
+        val configFile = testProjectDir.newFile("debug_keystore.properties")
+
+        configFile.writeText("""
+            STORE_FILE=keystores/debug.keystore
+            STORE_PASSWORD=store password
+            KEY_ALIAS=key alias
+            KEY_PASSWORD=key password
+        """.trimIndent())
+
+        buildFile.appendText("""
+            keystoreConfigs {
+                debug {
+                    configFile project.file('debug_keystore.properties')
                 }
             }
             
@@ -240,12 +279,39 @@ class KeystoreConfigPluginTest {
     }
 
     @Test
-    fun `KeystoreConfig also to quickly configure a debug keystore`() {
+    fun `KeystoreConfig also to quickly configure a debug keystore (passed as string)`() {
         // Given
         buildFile.appendText("""
             keystoreConfigs {
                 debug {
                     debugKeystore 'keystores/debug.keystore'
+                }
+            }
+            
+        """.trimIndent())
+
+        @Suppress("UnstableApiUsage")
+        val result = GradleRunner.create()
+            .withProjectDir(testProjectDir.root)
+            .withPluginClasspath()
+            .withArguments("printDebugSigningConfig")
+            .build()
+
+        // Then
+        assertThat(result.task(":printDebugSigningConfig")?.outcome).isEqualTo(TaskOutcome.SUCCESS)
+        assertThat(result.output).containsMatch("store file: .*?/keystores/debug\\.keystore")
+        assertThat(result.output).contains("store password: android")
+        assertThat(result.output).contains("key alias: androiddebugkey")
+        assertThat(result.output).contains("key password: android")
+    }
+
+    @Test
+    fun `KeystoreConfig also to quickly configure a debug keystore (passed as file)`() {
+        // Given
+        buildFile.appendText("""
+            keystoreConfigs {
+                debug {
+                    debugKeystore project.file('keystores/debug.keystore')
                 }
             }
             
