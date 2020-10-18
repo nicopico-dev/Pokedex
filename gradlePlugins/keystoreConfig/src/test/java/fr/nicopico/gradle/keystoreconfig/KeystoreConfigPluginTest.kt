@@ -37,7 +37,7 @@ class KeystoreConfigPluginTest {
     }
 
     @Test
-    fun `KeystoreConfig are created`() {
+    fun `KeystoreConfig are created and populated`() {
         // Given
         buildFile.appendText("""
             keystoreConfigs {
@@ -54,9 +54,12 @@ class KeystoreConfigPluginTest {
 
         buildFile.appendText("""
             task checkKeystoreConfigOutput {
+                def debugSigningConfig = keystoreConfigs.debug.signingConfig
+                def releaseSigningConfig = keystoreConfigs.release.signingConfig
+            
                 doLast {
-                    println("debug: " + (keystoreConfigs.debug.signingConfig != null ? "OK" : "KO"))
-                    println("release: " + (keystoreConfigs.release.signingConfig != null ? "OK" : "KO"))
+                    println("debug: " + (debugSigningConfig != null ? "OK" : "KO"))
+                    println("release: " + (releaseSigningConfig != null ? "OK" : "KO"))
                 }
             }
             
