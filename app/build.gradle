@@ -2,10 +2,17 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'fr.nicopico.gradle.versioning'
+    id 'fr.nicopico.gradle.keystores'
 }
 
 ext {
     moduleType = 'android'
+}
+
+keystores {
+    debug {
+        debugKeystore rootProject.file('config/keystores/debug.keystore')
+    }
 }
 
 android {
@@ -26,6 +33,9 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            signingConfig keystores.debug.signingConfig
         }
     }
 
