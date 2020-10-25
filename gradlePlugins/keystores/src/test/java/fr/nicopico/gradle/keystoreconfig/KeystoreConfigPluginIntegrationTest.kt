@@ -12,13 +12,11 @@ import org.junit.runners.Parameterized
 import org.junit.runners.Parameterized.Parameters
 import java.io.File
 
-typealias EnvPreparation = (GradleRunner, TemporaryFolder) -> Unit
-
 @RunWith(Parameterized::class)
 class KeystoreConfigPluginIntegrationTest(
-    private val label: String,
+    @Suppress("unused") /* Test label */ private val label: String,
     private val keystoreConfig: String,
-    private val envPreparation: EnvPreparation
+    private val envPreparation: (GradleRunner, TemporaryFolder) -> Unit
 ) {
 
     @get:Rule
@@ -106,7 +104,7 @@ class KeystoreConfigPluginIntegrationTest(
                     applicationId 'fr.nicopico.test'
                     compileSdkVersion 21
                 }
-            
+                
                 buildTypes {
                     debug {
                         signingConfig keystores.debug.signingConfig

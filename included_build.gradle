@@ -10,7 +10,7 @@ tasks.register("testVersioning") {
     dependsOn gradle.includedBuild("versioning").task(":test")
 }
 
-tasks.register("testKeystoreConfig") {
+tasks.register("testKeystores") {
     group "Included builds"
-    dependsOn gradle.includedBuild("keystoreConfig").task(":test")
+    dependsOn gradle.includedBuild("keystores").task(":test")
 }
