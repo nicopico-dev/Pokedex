@@ -1,6 +1,5 @@
 package fr.nicopico.gradle.keystoreconfig.internal
 
-import com.android.build.api.dsl.SigningConfig
 import com.google.common.truth.Truth.assertThat
 import fr.nicopico.gradle.keystoreconfig.accessAnyField
 import org.junit.Rule
@@ -23,7 +22,7 @@ class PropertiesBackedSigningConfigTest {
         }
     }
 
-    private fun createSigningConfig(propertyFile: File): SigningConfig = PropertiesBackedSigningConfig(
+    private fun createSigningConfig(propertyFile: File) = PropertiesBackedSigningConfig(
         "signingConfig",
         fileFinder,
         propertyFile

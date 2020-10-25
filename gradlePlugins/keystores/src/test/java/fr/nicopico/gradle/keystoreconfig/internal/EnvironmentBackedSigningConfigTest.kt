@@ -1,6 +1,5 @@
 package fr.nicopico.gradle.keystoreconfig.internal
 
-import com.android.build.api.dsl.SigningConfig
 import com.google.common.truth.Truth.assertThat
 import fr.nicopico.gradle.keystoreconfig.accessAnyField
 import fr.nicopico.gradle.keystoreconfig.internal.EnvironmentBackendSigningConfig.VariableNames
@@ -34,7 +33,7 @@ class EnvironmentBackedSigningConfigTest {
                 { File(testProjectDir.root, filePathSlot.captured) }
     }
 
-    private fun createSigningConfig(variableNames: VariableNames): SigningConfig = EnvironmentBackendSigningConfig(
+    private fun createSigningConfig(variableNames: VariableNames) = EnvironmentBackendSigningConfig(
         "signingConfig",
         variableNames,
         envGetter,

@@ -282,7 +282,7 @@ class KeystoreConfigPluginTest {
     }
 
     @Test
-    fun `KeystoreConfig also to quickly configure a debug keystore (passed as string)`() {
+    fun `KeystoreConfig allows to quickly configure a debug keystore (passed as string)`() {
         // Given
         buildFile.appendText("""
             keystores {
@@ -309,7 +309,7 @@ class KeystoreConfigPluginTest {
     }
 
     @Test
-    fun `KeystoreConfig also to quickly configure a debug keystore (passed as file)`() {
+    fun `KeystoreConfig allows to quickly configure a debug keystore (passed as file)`() {
         // Given
         buildFile.appendText("""
             keystores {
