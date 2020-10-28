@@ -47,7 +47,7 @@ android {
 
 dependencies {
     implementation mods.base.usecase
-    implementation mods.core.pokedexDi
+    implementation mods.core.api
     implementation mods.feature.pokemonList
 
     implementation deps.kotlin.stdlib

@@ -1,10 +1,8 @@
 includeBuild 'gradlePlugins/versioning'
 includeBuild 'gradlePlugins/keystores'
 
-include ':modules:base:android-di'
 include ':modules:base:tests'
 include ':modules:base:usecase'
-include ':modules:core:pokedex-di'
 include ':modules:core:api'
 include ':modules:core:domain'
 include ':modules:core:resources'

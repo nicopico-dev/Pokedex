@@ -32,13 +32,11 @@
             <option value="$PROJECT_DIR$/gradlePlugins/versioning" />
             <option value="$PROJECT_DIR$/modules" />
             <option value="$PROJECT_DIR$/modules/base" />
-            <option value="$PROJECT_DIR$/modules/base/android-di" />
             <option value="$PROJECT_DIR$/modules/base/tests" />
             <option value="$PROJECT_DIR$/modules/base/usecase" />
             <option value="$PROJECT_DIR$/modules/core" />
             <option value="$PROJECT_DIR$/modules/core/api" />
             <option value="$PROJECT_DIR$/modules/core/domain" />
-            <option value="$PROJECT_DIR$/modules/core/pokedex-di" />
             <option value="$PROJECT_DIR$/modules/core/resources" />
             <option value="$PROJECT_DIR$/modules/feature" />
             <option value="$PROJECT_DIR$/modules/feature/pokemon-list" />

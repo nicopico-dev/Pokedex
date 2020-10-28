@@ -15,14 +15,12 @@ ext {
 
     mods = [
             base: [
-                    androidDi: project(":modules:base:android-di"),
                     usecase: project(":modules:base:usecase"),
                     tests: project(":modules:base:tests"),
             ],
             core: [
                     api: project(":modules:core:api"),
                     domain: project(":modules:core:domain"),
-                    pokedexDi: project(":modules:core:pokedex-di"),
                     resources: project(":modules:core:resources"),
             ],
             feature: [

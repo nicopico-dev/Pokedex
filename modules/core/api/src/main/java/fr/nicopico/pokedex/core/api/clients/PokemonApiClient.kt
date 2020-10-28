@@ -4,7 +4,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
-class PokemonApiClient(
+internal class PokemonApiClient(
     rootUrl: String = PokemonApi.endpoint_v2,
     okHttpClient: OkHttpClient? = null
 ) : PokemonApi by Retrofit.Builder()

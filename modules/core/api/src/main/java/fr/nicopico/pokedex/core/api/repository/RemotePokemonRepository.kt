@@ -5,11 +5,13 @@ import fr.nicopico.pokedex.core.api.models.PokemonJson
 import fr.nicopico.pokedex.core.api.models.getLimit
 import fr.nicopico.pokedex.core.api.models.getOffset
 import fr.nicopico.pokedex.core.api.models.toPage
-import fr.nicopico.pokedex.domain.model.*
+import fr.nicopico.pokedex.domain.model.Page
+import fr.nicopico.pokedex.domain.model.PageIndex
+import fr.nicopico.pokedex.domain.model.Pokemon
 import fr.nicopico.pokedex.domain.repository.PokemonRepository
 import java.net.URI
 
-class RemotePokemonRepository(
+internal class RemotePokemonRepository(
     private val pokemonApi: PokemonApi
 ) : PokemonRepository {
 

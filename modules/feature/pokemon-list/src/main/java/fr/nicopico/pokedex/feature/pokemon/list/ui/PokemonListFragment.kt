@@ -7,16 +7,16 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import fr.nicopico.base.android.dependency.injection.injectedViewModels
 import fr.nicopico.pokedex.feature.pokemon.list.R
 import fr.nicopico.pokedex.feature.pokemon.list.databinding.PokemonListFragmentBinding
 import fr.nicopico.pokedex.resources.recyclerview.SpacingItemDecoration
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PokemonListFragment : Fragment() {
 
     private lateinit var binding: PokemonListFragmentBinding
 
-    private val viewModel: PokemonListViewModel by injectedViewModels()
+    private val viewModel: PokemonListViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -40,7 +40,6 @@ android {
 }
 
 dependencies {
-    implementation mods.base.androidDi
     implementation mods.base.usecase
     implementation mods.core.domain
     implementation mods.core.resources
@@ -55,6 +54,7 @@ dependencies {
     implementation deps.android.recyclerView
     implementation deps.android.recyclerViewSelection
 
+    implementation deps.koin.androidViewModel
     implementation deps.media.coil
 
     testImplementation testDeps.junit

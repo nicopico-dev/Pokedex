@@ -13,6 +13,8 @@ dependencies {
 
     implementation deps.kotlin.stdlib
 
+    implementation deps.koin.core
+
     implementation deps.network.retrofit2
     implementation deps.network.retrofit2_moshi
     implementation deps.network.moshi
