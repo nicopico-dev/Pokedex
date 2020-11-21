@@ -21,8 +21,7 @@ class PokedexApp : Application() {
             // TODO Await fix for Koin and replace the explicit invocations
             //  of loadModules() and createRootScope() with a single call to modules()
             //  (https://github.com/InsertKoinIO/koin/issues/847)
-            koin.loadModules(pokedexModules)
-            koin.createRootScope()
+            modules(pokedexModules)
         }
     }
 }
