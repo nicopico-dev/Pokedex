@@ -38,7 +38,7 @@ class FetchPokemonListUseCaseTest {
     }
 
     @Test
-    fun somePokemonsAreReturned() = runBlocking {
+    fun `Some pokemons are returned`() = runBlocking {
         // Given
         val pageIndexSlot = slot<Int>()
         val pageSizeSlot = slot<Int>()
