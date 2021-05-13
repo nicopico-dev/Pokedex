@@ -6,7 +6,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val pokemonListModule = module {
-    viewModel { PokemonListViewModel(get()) }
+    viewModel { PokemonListViewModel(get(), get()) }
 
     factory { FetchPokemonListUseCase(get()) }
 }

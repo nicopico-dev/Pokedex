@@ -12,7 +12,8 @@ import fr.nicopico.pokedex.feature.pokemon.list.R
 import fr.nicopico.pokedex.feature.pokemon.list.databinding.PokemonListItemBinding
 
 internal class PokemonAdapter(
-    context: Context
+    context: Context,
+    private val onPokemonClicked: (Pokemon) -> Unit
 ) : ListAdapter<Pokemon, PokemonAdapter.ViewHolder>(DiffItemCallback()) {
 
     private val inflater = LayoutInflater.from(context)
@@ -40,7 +41,14 @@ internal class PokemonAdapter(
         private val binding: PokemonListItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
+        private lateinit var pokemon: Pokemon
+
+        init {
+            binding.root.setOnClickListener { onPokemonClicked(pokemon) }
+        }
+
         fun bindTo(item: Pokemon) {
+            this.pokemon = item
             binding.txtPokemonName.text = item.name
             binding.imgPokemon.load(item.illustrationUrl) {
                 placeholder(R.drawable.pokemon_list_item_placeholder)
