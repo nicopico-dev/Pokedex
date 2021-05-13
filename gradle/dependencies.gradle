@@ -39,66 +39,66 @@ ext {
     deps = [
             kotlin: [
                     reflect: "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version",
-                    stdlib: "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
-                    coroutines: "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutines_version",
+                    stdlib: "org.jetbrains.kotlin:kotlin-stdlib:_",
+                    coroutines: "org.jetbrains.kotlinx:kotlinx-coroutines-core:_",
             ],
 
             android: [
                     activityKtx: 'androidx.activity:activity-ktx:1.1.0',
-                    appCompat: 'androidx.appcompat:appcompat:1.2.0',
-                    cardView: 'androidx.cardview:cardview:1.0.0',
-                    coreKtx: 'androidx.core:core-ktx:1.3.2',
+                    appCompat: 'androidx.appcompat:appcompat:_',
+                    cardView: 'androidx.cardview:cardview:_',
+                    coreKtx: 'androidx.core:core-ktx:_',
                     constraintLayout: 'androidx.constraintlayout:constraintlayout:1.1.3',
                     coroutines: "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutines_version",
-                    fragmentKtx: "androidx.fragment:fragment-ktx:$fragment_version",
-                    lifecycleLiveDataKtx: "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version",
+                    fragmentKtx: "androidx.fragment:fragment-ktx:_",
+                    lifecycleLiveDataKtx: "androidx.lifecycle:lifecycle-livedata-ktx:_",
                     lifecycleViewModelKtx: "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version",
                     lifecycleViewModelSavedState: "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version",
-                    recyclerView: 'androidx.recyclerview:recyclerview:1.1.0',
-                    recyclerViewSelection: 'androidx.recyclerview:recyclerview-selection:1.1.0-rc03',
+                    recyclerView: 'androidx.recyclerview:recyclerview:_',
+                    recyclerViewSelection: 'androidx.recyclerview:recyclerview-selection:_',
             ],
 
             koin: [
-                    core: "io.insert-koin:koin-core:$koin_version",
+                    core: "io.insert-koin:koin-core:_",
                     coreExt: "io.insert-koin:koin-core-ext:$koin_version",
                     androidScope: "io.insert-koin:koin-androidx-scope:$koin_version",
-                    androidViewModel: "io.insert-koin:koin-androidx-viewmodel:$koin_version",
+                    androidViewModel: "io.insert-koin:koin-androidx-viewmodel:_",
             ],
 
             media: [
-                    coil: 'io.coil-kt:coil:1.0.0',
+                    coil: 'io.coil-kt:coil:_',
             ],
 
             network: [
-                    moshi: "com.squareup.moshi:moshi-kotlin:$moshi_version",
-                    okhttp3: "com.squareup.okhttp3:okhttp:$okhttp_version",
-                    retrofit2: "com.squareup.retrofit2:retrofit:$retrofit_version",
-                    retrofit2_moshi: "com.squareup.retrofit2:converter-moshi:$retrofit_version",
+                    moshi: "com.squareup.moshi:moshi-kotlin:_",
+                    okhttp3: "com.squareup.okhttp3:okhttp:_",
+                    retrofit2: "com.squareup.retrofit2:retrofit:_",
+                    retrofit2_moshi: "com.squareup.retrofit2:converter-moshi:_",
             ],
     ]
 
     kapt = [
-            moshi: "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version",
+            moshi: "com.squareup.moshi:moshi-kotlin-codegen:_",
     ]
 
     testDeps = [
             android: [
                     core: 'androidx.test:core:1.2.0',
-                    espresso: 'androidx.test.espresso:espresso-core:3.3.0',
-                    junitExt: 'androidx.test.ext:junit:1.1.2',
-                    robolectric: 'org.robolectric:robolectric:4.4',
+                    espresso: 'androidx.test.espresso:espresso-core:_',
+                    junitExt: 'androidx.test.ext:junit:_',
+                    robolectric: 'org.robolectric:robolectric:_',
             ],
 
             kotlin: [
-                    coroutines: "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutines_version",
+                    coroutines: "org.jetbrains.kotlinx:kotlinx-coroutines-test:_",
             ],
 
-            junit: 'junit:junit:4.13.1',
-            mockk: 'io.mockk:mockk:1.10.2',
-            mockWebServer: "com.squareup.okhttp3:mockwebserver:$okhttp_version",
-            truth: 'com.google.truth:truth:1.1',
+            junit: 'junit:junit:_',
+            mockk: 'io.mockk:mockk:_',
+            mockWebServer: "com.squareup.okhttp3:mockwebserver:_",
+            truth: 'com.google.truth:truth:_',
 
-            koin: "io.insert-koin:koin-test:$koin_version",
+            koin: "io.insert-koin:koin-test:_",
     ]
 }
 
