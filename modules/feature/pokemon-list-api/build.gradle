@@ -1,0 +1,27 @@
+plugins {
+    id 'java-library'
+    id 'kotlin'
+}
+
+ext {
+    moduleType = 'kotlin'
+}
+
+dependencies {
+    implementation mods.core.domain
+    implementation mods.core.api
+
+    implementation deps.kotlin.stdlib
+
+    implementation deps.koin.core
+
+    testImplementation testDeps.junit
+    testImplementation testDeps.truth
+    testImplementation testDeps.mockk
+    testImplementation testDeps.mockWebServer
+
+    testImplementation mods.base.tests
+}
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'

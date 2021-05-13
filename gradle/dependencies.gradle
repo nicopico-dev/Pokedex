@@ -24,7 +24,8 @@ ext {
                     resources: project(":modules:core:resources"),
             ],
             feature: [
-                    pokemonList: project(':modules:feature:pokemon-list')
+                    pokemonList: project(':modules:feature:pokemon-list'),
+                    pokemonListApi: project(':modules:feature:pokemon-list-api'),
             ]
     ]
 

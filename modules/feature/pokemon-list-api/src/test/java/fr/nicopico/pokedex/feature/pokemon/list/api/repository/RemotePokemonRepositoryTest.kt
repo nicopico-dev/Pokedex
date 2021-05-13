@@ -1,12 +1,10 @@
-package fr.nicopico.pokedex.core.api.repository
+package fr.nicopico.pokedex.feature.pokemon.list.api.repository
 
 import com.google.common.truth.Truth.assertThat
 import fr.nicopico.base.tests.CoroutineTestRule
 import fr.nicopico.pokedex.core.api.clients.PokemonApi
 import fr.nicopico.pokedex.core.api.models.PagedResource
 import fr.nicopico.pokedex.core.api.models.PokemonJson
-import fr.nicopico.pokedex.core.api.models.getLimit
-import fr.nicopico.pokedex.core.api.models.getOffset
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
@@ -18,7 +16,7 @@ import org.junit.Rule
 import org.junit.Test
 import kotlin.random.Random
 
-class PokemonRepositoryTest {
+class RemotePokemonRepositoryTest {
 
     @ExperimentalCoroutinesApi
     @get:Rule
@@ -32,8 +30,7 @@ class PokemonRepositoryTest {
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-        repository =
-            RemotePokemonRepository(api)
+        repository = RemotePokemonRepository(api)
     }
 
     @Test
@@ -42,7 +39,10 @@ class PokemonRepositoryTest {
         val limitSlot = slot<Int>()
         val offsetSlot = slot<Int>()
         coEvery {
-            api.fetchPokemonList(capture(limitSlot), capture(offsetSlot))
+            api.fetchPokemonList(
+                offset = capture(offsetSlot),
+                limit = capture(limitSlot)
+            )
         } returns PagedResource(
             count = 2,
             next = null,
@@ -54,19 +54,17 @@ class PokemonRepositoryTest {
         )
 
         // When
-        val pageIndex = Random.nextInt()
-        val pageSize = Random.nextInt()
+        val offset = Random.nextInt()
+        val limit = Random.nextInt()
         val pokemons = runBlocking {
-            repository.list(pageIndex, pageSize)
+            repository.list(offset, limit)
         }
 
         // Then
         assertThat(pokemons).isNotNull()
-        assertThat(pokemons.index).isEqualTo(pageIndex)
-        assertThat(pokemons.totalCount).isEqualTo(2)
-        assertThat(pokemons.content).hasSize(pokemons.totalCount)
+        assertThat(pokemons.size).isEqualTo(2)
 
-        assertThat(offsetSlot.captured).isEqualTo(pageIndex.getOffset(pageSize))
-        assertThat(limitSlot.captured).isEqualTo(pageIndex.getLimit(pageSize))
+        assertThat(offsetSlot.captured).isEqualTo(offset)
+        assertThat(limitSlot.captured).isEqualTo(limit)
     }
 }

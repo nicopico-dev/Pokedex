@@ -43,6 +43,7 @@ dependencies {
     implementation mods.base.usecase
     implementation mods.core.domain
     implementation mods.core.resources
+    api mods.feature.pokemonListApi
 
     implementation deps.kotlin.stdlib
 

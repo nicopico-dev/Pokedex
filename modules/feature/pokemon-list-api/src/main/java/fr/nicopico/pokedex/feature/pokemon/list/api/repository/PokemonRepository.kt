@@ -1,4 +1,4 @@
-package fr.nicopico.pokedex.domain.repository
+package fr.nicopico.pokedex.feature.pokemon.list.api.repository
 
 import fr.nicopico.pokedex.domain.model.Pokemon
 
