@@ -61,8 +61,8 @@ ext {
 
             koin: [
                     core: "io.insert-koin:koin-core:$koin_version",
+                    android: "io.insert-koin:koin-android:$koin_version",
                     androidScope: "io.insert-koin:koin-androidx-scope:$koin_version",
-                    androidViewModel: "io.insert-koin:koin-android:$koin_version",
             ],
 
             media: [

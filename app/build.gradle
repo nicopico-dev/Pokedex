@@ -54,7 +54,7 @@ dependencies {
     implementation deps.android.coreKtx
     implementation deps.android.appCompat
 
-    implementation deps.koin.androidViewModel
+    implementation deps.koin.android
 
     testImplementation testDeps.junit
     testImplementation testDeps.truth
