@@ -42,6 +42,7 @@ dependencies {
 
     implementation deps.android.fragmentKtx
     implementation deps.android.recyclerView
+    implementation deps.android.viewbinding
 
     testImplementation testDeps.junit
     testImplementation testDeps.truth

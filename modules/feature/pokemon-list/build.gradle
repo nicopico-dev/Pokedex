@@ -53,6 +53,7 @@ dependencies {
     implementation deps.android.lifecycleLiveDataKtx
     implementation deps.android.recyclerView
     implementation deps.android.recyclerViewSelection
+    implementation deps.android.viewbinding
 
     implementation deps.koin.androidViewModel
     implementation deps.media.coil

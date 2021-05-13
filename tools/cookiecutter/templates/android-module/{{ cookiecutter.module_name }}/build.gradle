@@ -39,6 +39,7 @@ android {
 
 dependencies {
     implementation deps.kotlin.stdlib
+    implementation deps.android.viewbinding
 
     testImplementation testDeps.junit
     testImplementation testDeps.truth
