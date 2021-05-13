@@ -1,5 +1,10 @@
 package fr.nicopico.base.usecase
 
+/**
+ * Short-hand for [Result] containing a list
+ */
+typealias ResultList<T> = Result<List<T>>
+
 /** Adaptation from [kotlin.Result], as the original generate a warning when used as a return type */
 sealed class Result<T> {
     class Success<T>(val value: T) : Result<T>()

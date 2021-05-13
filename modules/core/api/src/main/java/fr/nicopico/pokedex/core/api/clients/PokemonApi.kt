@@ -15,8 +15,8 @@ interface PokemonApi {
 
     @GET("pokemon")
     suspend fun fetchPokemonList(
-        @Query("limit") limit: Int = 20,
-        @Query("offset") offset: Int = 0
+        @Query("offset") offset: Int,
+        @Query("limit") limit: Int
     ): PagedResource<PokemonJson>
 
     @GET("pokemon/{name}")

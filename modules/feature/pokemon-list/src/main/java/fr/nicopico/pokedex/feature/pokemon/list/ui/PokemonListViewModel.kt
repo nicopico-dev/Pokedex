@@ -14,7 +14,7 @@ constructor(
 ) : ViewModel() {
     val pokemons: LiveData<List<Pokemon>> = liveData {
         useCase.execute(0)
-            .onSuccess { emit(it.content) }
+            .onSuccess { emit(it) }
             .onFailure { throw it }
     }
 }

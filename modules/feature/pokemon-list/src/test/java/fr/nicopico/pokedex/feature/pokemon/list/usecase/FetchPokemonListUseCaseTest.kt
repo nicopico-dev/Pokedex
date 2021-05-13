@@ -3,7 +3,6 @@ package fr.nicopico.pokedex.feature.pokemon.list.usecase
 import com.google.common.truth.Truth.assertThat
 import fr.nicopico.base.tests.CoroutineTestRule
 import fr.nicopico.base.usecase.Result
-import fr.nicopico.pokedex.domain.model.Page
 import fr.nicopico.pokedex.domain.model.Pokemon
 import fr.nicopico.pokedex.domain.repository.PokemonRepository
 import io.mockk.MockKAnnotations
@@ -45,20 +44,16 @@ class FetchPokemonListUseCaseTest {
         coEvery {
             pokemonRepository.list(capture(pageIndexSlot), capture(pageSizeSlot))
         } answers {
-            Page(
-                index = pageIndexSlot.captured,
-                totalCount = 2,
-                content = listOf(
-                    Pokemon(
-                        id = 1,
-                        name = "Bulbizar",
-                        illustrationUrl = "https://pokeapi.co/api/v2/pokemon/1/"
-                    ),
-                    Pokemon(
-                        id = 2,
-                        name = "Pikachu",
-                        illustrationUrl = "https://pokeapi.co/api/v2/pokemon/2/"
-                    )
+            listOf(
+                Pokemon(
+                    id = 1,
+                    name = "Bulbizar",
+                    illustrationUrl = "https://pokeapi.co/api/v2/pokemon/1/"
+                ),
+                Pokemon(
+                    id = 2,
+                    name = "Pikachu",
+                    illustrationUrl = "https://pokeapi.co/api/v2/pokemon/2/"
                 )
             )
         }
@@ -69,16 +64,16 @@ class FetchPokemonListUseCaseTest {
         // Then
         assertThat(actual).isInstanceOf(Result.Success::class.java)
 
-        val success = actual as Result.Success<Page<Pokemon>>
-        assertThat(success.value.content).hasSize(2)
+        val success = actual as Result.Success<List<Pokemon>>
+        assertThat(success.value).hasSize(2)
 
-        val bulbizar = success.value.content[0]
+        val bulbizar = success.value[0]
         with(bulbizar) {
             assertThat(id).isEqualTo(1)
             assertThat(name).isEqualTo("Bulbizar")
         }
 
-        val pikachu = success.value.content[1]
+        val pikachu = success.value[1]
         with(pikachu) {
             assertThat(id).isEqualTo(2)
             assertThat(name).isEqualTo("Pikachu")

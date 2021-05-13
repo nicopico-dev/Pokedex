@@ -2,11 +2,6 @@ package fr.nicopico.pokedex.core.api.repository
 
 import fr.nicopico.pokedex.core.api.clients.PokemonApi
 import fr.nicopico.pokedex.core.api.models.PokemonJson
-import fr.nicopico.pokedex.core.api.models.getLimit
-import fr.nicopico.pokedex.core.api.models.getOffset
-import fr.nicopico.pokedex.core.api.models.toPage
-import fr.nicopico.pokedex.domain.model.Page
-import fr.nicopico.pokedex.domain.model.PageIndex
 import fr.nicopico.pokedex.domain.model.Pokemon
 import fr.nicopico.pokedex.domain.repository.PokemonRepository
 import java.net.URI
@@ -15,13 +10,11 @@ internal class RemotePokemonRepository(
     private val pokemonApi: PokemonApi
 ) : PokemonRepository {
 
-    override suspend fun list(pageIndex: PageIndex, pageSize: Int): Page<Pokemon> {
+    override suspend fun list(offset: Int, limit: Int?): List<Pokemon> {
         return pokemonApi
-            .fetchPokemonList(
-                offset = pageIndex.getOffset(pageSize),
-                limit = pageIndex.getLimit(pageSize)
-            )
-            .toPage(pageIndex, this::toModel)
+            .fetchPokemonList(offset, limit ?: 0)
+            .results
+            .map(::toModel)
     }
 
     private fun toModel(json: PokemonJson): Pokemon {

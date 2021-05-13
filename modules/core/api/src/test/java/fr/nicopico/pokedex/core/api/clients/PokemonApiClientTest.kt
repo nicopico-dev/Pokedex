@@ -24,7 +24,7 @@ class PokemonApiClientTest : BaseApiClientTest() {
     @Test
     fun fetchPokemonList() = runBlocking {
         enqueueResponse("fetchPokemonList.json")
-        val result = apiClient.fetchPokemonList()
+        val result = apiClient.fetchPokemonList(offset = 0, limit = 20)
         waitForRequest()
 
         assertThat(result.count).isAtLeast(1)
