@@ -5,7 +5,7 @@ plugins {
 }
 
 repositories {
-    jcenter()
+    mavenCentral()
     google()
 }
 
@@ -21,9 +21,9 @@ gradlePlugin {
 }
 
 dependencies {
-    compileOnly("com.android.tools.build:gradle:4.1.0")
+    compileOnly("com.android.tools.build:gradle:4.2.0")
 
     testImplementation("junit:junit:4.13.1")
     testImplementation("io.mockk:mockk:1.10.2")
-    testImplementation("com.google.truth:truth:1.0.1")
+    testImplementation("com.google.truth:truth:1.1")
 }

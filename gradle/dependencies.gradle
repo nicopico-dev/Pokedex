@@ -1,15 +1,15 @@
 repositories {
     google()
-    jcenter()
+    mavenCentral()
     maven { url 'https://dl.bintray.com/sargunv/maven' }
 }
 
 ext {
     fragment_version = '1.2.5'
-    koin_version= '2.2.1'
+    koin_version= '2.2.2'
     kotlinCoroutines_version = '1.4.1'
     lifecycle_version = '2.2.0'
-    moshi_version = '1.11.0'
+    moshi_version = '1.12.0'
     okhttp_version = '4.9.0'
     retrofit_version = '2.9.0'
 
@@ -30,8 +30,8 @@ ext {
 
 
     build = [
-            compileSdk: 29,
-            buildTools: '29.0.3',
+            compileSdk: 30,
+            buildTools: '30.0.3',
             minSdk    : 23,
             targetSdk : 29,
     ]
@@ -59,10 +59,10 @@ ext {
             ],
 
             koin: [
-                    core: "org.koin:koin-core:$koin_version",
-                    coreExt: "org.koin:koin-core-ext:$koin_version",
-                    androidScope: "org.koin:koin-androidx-scope:$koin_version",
-                    androidViewModel: "org.koin:koin-androidx-viewmodel:$koin_version",
+                    core: "io.insert-koin:koin-core:$koin_version",
+                    coreExt: "io.insert-koin:koin-core-ext:$koin_version",
+                    androidScope: "io.insert-koin:koin-androidx-scope:$koin_version",
+                    androidViewModel: "io.insert-koin:koin-androidx-viewmodel:$koin_version",
             ],
 
             media: [
@@ -98,7 +98,7 @@ ext {
             mockWebServer: "com.squareup.okhttp3:mockwebserver:$okhttp_version",
             truth: 'com.google.truth:truth:1.1',
 
-            koin: "org.koin:koin-test:$koin_version",
+            koin: "io.insert-koin:koin-test:$koin_version",
     ]
 }
 
@@ -108,5 +108,12 @@ configurations.all {
         // kotlin-reflect is a transitive dependency on several direct dependencies
         //  force the version here to avoid adding the dependency directly everywhere
         force deps.kotlin.reflect
+
+        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+            def requested = details.requested
+            if (requested.group == 'org.jetbrains.kotlin') {
+                details.useVersion kotlin_version
+            }
+        }
     }
 }
