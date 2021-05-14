@@ -2,9 +2,9 @@ package fr.nicopico.pokedex.feature.pokemon.list.api.repository
 
 import com.google.common.truth.Truth.assertThat
 import fr.nicopico.base.tests.CoroutineTestRule
-import fr.nicopico.pokedex.core.api.clients.PokemonApi
 import fr.nicopico.pokedex.core.api.models.PagedResource
-import fr.nicopico.pokedex.core.api.models.PokemonJson
+import fr.nicopico.pokedex.feature.pokemon.list.api.remote.PokemonJson
+import fr.nicopico.pokedex.feature.pokemon.list.api.remote.PokemonListApi
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
@@ -16,21 +16,21 @@ import org.junit.Rule
 import org.junit.Test
 import kotlin.random.Random
 
-class RemotePokemonRepositoryTest {
+class PokemonListRepositoryImplTest {
 
     @ExperimentalCoroutinesApi
     @get:Rule
     val coroutineTestRule = CoroutineTestRule()
 
-    private lateinit var repository: RemotePokemonRepository
+    private lateinit var repository: PokemonListRepositoryImpl
 
     @MockK
-    private lateinit var api: PokemonApi
+    private lateinit var api: PokemonListApi
 
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-        repository = RemotePokemonRepository(api)
+        repository = PokemonListRepositoryImpl(api)
     }
 
     @Test

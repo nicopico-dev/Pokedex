@@ -1,16 +1,16 @@
 package fr.nicopico.pokedex.feature.pokemon.list.api.repository
 
-import fr.nicopico.pokedex.core.api.clients.PokemonApi
-import fr.nicopico.pokedex.core.api.models.PokemonJson
 import fr.nicopico.pokedex.domain.model.Pokemon
+import fr.nicopico.pokedex.feature.pokemon.list.api.remote.PokemonJson
+import fr.nicopico.pokedex.feature.pokemon.list.api.remote.PokemonListApi
 import java.net.URI
 
-internal class RemotePokemonRepository(
-    private val pokemonApi: PokemonApi
-) : PokemonRepository {
+internal class PokemonListRepositoryImpl(
+    private val remoteApi: PokemonListApi
+) : PokemonListRepository {
 
     override suspend fun list(offset: Int, limit: Int?): List<Pokemon> {
-        return pokemonApi
+        return remoteApi
             .fetchPokemonList(offset, limit ?: 0)
             .results
             .map(::toModel)

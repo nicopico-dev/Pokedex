@@ -1,6 +1,7 @@
 plugins {
     id 'java-library'
     id 'kotlin'
+    id 'kotlin-kapt'
 }
 
 ext {
@@ -15,10 +16,15 @@ dependencies {
 
     implementation deps.koin.core
 
+    implementation deps.network.retrofit2
+    implementation deps.network.moshi
+    kapt kapt.moshi
+
     testImplementation testDeps.junit
     testImplementation testDeps.truth
     testImplementation testDeps.mockk
     testImplementation testDeps.mockWebServer
+    implementation deps.network.okhttp3 // Needed for mockWebServer
 
     testImplementation mods.base.tests
 }

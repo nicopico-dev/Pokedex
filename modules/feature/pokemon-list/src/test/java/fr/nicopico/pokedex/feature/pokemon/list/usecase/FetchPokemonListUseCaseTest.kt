@@ -4,7 +4,7 @@ import com.google.common.truth.Truth.assertThat
 import fr.nicopico.base.tests.CoroutineTestRule
 import fr.nicopico.base.usecase.Result
 import fr.nicopico.pokedex.domain.model.Pokemon
-import fr.nicopico.pokedex.feature.pokemon.list.api.repository.PokemonRepository
+import fr.nicopico.pokedex.feature.pokemon.list.api.repository.PokemonListRepository
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
@@ -24,14 +24,14 @@ class FetchPokemonListUseCaseTest {
     private lateinit var useCase: FetchPokemonListUseCase
 
     @MockK
-    private lateinit var pokemonRepository: PokemonRepository
+    private lateinit var pokemonListRepository: PokemonListRepository
     private val pageSize = 20
 
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
         useCase = FetchPokemonListUseCase(
-            pokemonRepository,
+            pokemonListRepository,
             pageSize
         )
     }
@@ -42,7 +42,7 @@ class FetchPokemonListUseCaseTest {
         val pageIndexSlot = slot<Int>()
         val pageSizeSlot = slot<Int>()
         coEvery {
-            pokemonRepository.list(capture(pageIndexSlot), capture(pageSizeSlot))
+            pokemonListRepository.list(capture(pageIndexSlot), capture(pageSizeSlot))
         } answers {
             listOf(
                 Pokemon(

@@ -1,24 +1,26 @@
 package fr.nicopico.pokedex.core.api.clients
 
-import fr.nicopico.pokedex.core.api.models.PagedResource
-import fr.nicopico.pokedex.core.api.models.PokemonDetailsJson
-import fr.nicopico.pokedex.core.api.models.PokemonJson
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
+import kotlin.reflect.KClass
 
-interface PokemonApi {
+const val POKEMON_API_ENDPOINT_V2 = "https://pokeapi.co/api/v2/"
 
-    companion object {
-        const val endpoint_v2 = "https://pokeapi.co/api/v2/"
-    }
+val defaultOkHttpClient: OkHttpClient by lazy { OkHttpClient.Builder()
+    .retryOnConnectionFailure(false)
+    .build()
+}
 
-    @GET("pokemon")
-    suspend fun fetchPokemonList(
-        @Query("offset") offset: Int,
-        @Query("limit") limit: Int
-    ): PagedResource<PokemonJson>
-
-    @GET("pokemon/{name}")
-    suspend fun fetchPokemonDetails(@Path("name") name: String): PokemonDetailsJson
+fun <T : Any> createApiClient(
+    clazz: KClass<T>,
+    baseUrl: String = POKEMON_API_ENDPOINT_V2,
+    okHttpClient: OkHttpClient = defaultOkHttpClient
+): T {
+    return Retrofit.Builder()
+        .baseUrl(baseUrl)
+        .addConverterFactory(MoshiConverterFactory.create())
+        .client(okHttpClient)
+        .build()
+        .create(clazz.java)
 }

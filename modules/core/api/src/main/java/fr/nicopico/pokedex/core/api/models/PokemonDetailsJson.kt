@@ -3,6 +3,7 @@ package fr.nicopico.pokedex.core.api.models
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
+@Deprecated("Do not use")
 @JsonClass(generateAdapter = true)
 data class PokemonDetailsJson(
     @field:Json(name = "id") val id: Int,
