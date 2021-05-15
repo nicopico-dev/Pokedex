@@ -1,5 +1,6 @@
 {
   "module_name": "",
   "package_name": "",
-  "package_dir": "{{ cookiecutter.package_name | replace('.', '/') }}"
+  "package_dir": "{{ cookiecutter.package_name | replace('.', '/') }}",
+  "module_path": "PASSED BY COMMAND LINE"
 }
