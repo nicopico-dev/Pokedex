@@ -3,8 +3,8 @@ package fr.nicopico.pokedex.feature.pokemon.list.usecase
 import com.google.common.truth.Truth.assertThat
 import fr.nicopico.base.tests.CoroutineTestRule
 import fr.nicopico.base.usecase.Result
-import fr.nicopico.pokedex.domain.model.Pokemon
 import fr.nicopico.pokedex.feature.pokemon.list.api.repository.PokemonListRepository
+import fr.nicopico.pokedex.feature.pokemon.list.model.Pokemon
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
