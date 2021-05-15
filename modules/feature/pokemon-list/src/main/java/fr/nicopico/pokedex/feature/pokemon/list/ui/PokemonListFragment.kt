@@ -5,9 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import fr.nicopico.pokedex.domain.model.Pokemon
 import fr.nicopico.pokedex.feature.pokemon.list.R
 import fr.nicopico.pokedex.feature.pokemon.list.databinding.PokemonListFragmentBinding
 import fr.nicopico.pokedex.resources.recyclerview.SpacingItemDecoration
@@ -35,7 +33,7 @@ class PokemonListFragment : Fragment() {
         with(binding.rcvPokemons) {
             layoutManager = GridLayoutManager(context, columnCount)
             adapter = PokemonAdapter(context, viewModel::onPokemonClicked).apply {
-                viewModel.pokemons.observe(viewLifecycleOwner, Observer { submitList(it) })
+                viewModel.pokemons.observe(viewLifecycleOwner, { submitList(it) })
             }
             addItemDecoration(SpacingItemDecoration(layoutManager!!, itemSpacing))
         }

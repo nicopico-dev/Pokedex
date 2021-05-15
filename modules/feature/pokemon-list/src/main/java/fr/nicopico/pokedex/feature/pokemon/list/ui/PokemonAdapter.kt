@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import fr.nicopico.pokedex.domain.model.Pokemon
 import fr.nicopico.pokedex.feature.pokemon.list.R
 import fr.nicopico.pokedex.feature.pokemon.list.databinding.PokemonListItemBinding
+import fr.nicopico.pokedex.feature.pokemon.list.model.Pokemon
 
 internal class PokemonAdapter(
     context: Context,

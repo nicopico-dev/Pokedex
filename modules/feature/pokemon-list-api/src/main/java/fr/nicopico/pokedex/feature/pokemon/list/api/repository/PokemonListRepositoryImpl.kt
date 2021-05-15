@@ -1,8 +1,8 @@
 package fr.nicopico.pokedex.feature.pokemon.list.api.repository
 
-import fr.nicopico.pokedex.domain.model.Pokemon
 import fr.nicopico.pokedex.feature.pokemon.list.api.remote.PokemonJson
 import fr.nicopico.pokedex.feature.pokemon.list.api.remote.PokemonListApi
+import fr.nicopico.pokedex.feature.pokemon.list.model.Pokemon
 import java.net.URI
 
 internal class PokemonListRepositoryImpl(
